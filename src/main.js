@@ -894,6 +894,15 @@ audioSourceSelect.addEventListener('change', () => {
 
 document.getElementById('music-sensitivity').addEventListener('input', (e) => music.setSensitivity(parseInt(e.target.value)));
 document.getElementById('music-smoothing').addEventListener('input', (e) => music.setSmoothing(parseInt(e.target.value)));
+document.getElementById('music-palette').addEventListener('change', (e) => {
+  const group = document.getElementById('custom-colors-group');
+  group.style.display = e.target.value === 'custom' ? '' : 'none';
+});
+document.getElementById('music-gradient-speed').addEventListener('input', (e) => {
+  const v = parseInt(e.target.value);
+  document.getElementById('gradient-speed-label').textContent = v;
+  effects.setGradientSpeed(v);
+});
 
 document.getElementById('btn-start-audio').addEventListener('click', async () => {
   try {
@@ -999,22 +1008,39 @@ function startMusicEffect() {
     const mode = document.getElementById('music-mode').value;
     const palette = document.getElementById('music-palette').value;
     const colorDirection = document.getElementById('music-gradient-direction').value;
+    const gradientSpeed = parseInt(document.getElementById('music-gradient-speed').value) / 100;
+    const customColors = palette === 'custom'
+      ? [document.getElementById('music-custom1').value, document.getElementById('music-custom2').value,
+         document.getElementById('music-custom3').value, document.getElementById('music-custom4').value]
+      : null;
 
     effects.elapsed += dt * (effects.speed / 50);
 
     if (mode === 'music-sync-upright') {
       const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
-      effects.applyMusicSyncUpright(bands, palette, music.bass, music.mid, music.treble, colorDirection);
+      effects.applyMusicSyncUpright(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'equalizer') {
       const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
-      effects.applyEqualizer(bands, palette, music.bass, music.mid, music.treble, colorDirection);
+      effects.applyEqualizer(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'chunky-eq') {
       const bands = music.getSmoothedBands(8);
-      effects.applyChunkyEQ(bands, palette, music.bass, music.mid, music.treble, colorDirection);
+      effects.applyChunkyEQ(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'column-split') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyColumnSplit(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'ridge-line') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyRidgeLine(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'bass-floor') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyBassFloor(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'sharp-bars') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applySharpBars(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'top-row-vu') {
       // pure bass — kick drums spike it hard, treble doesn't dilute the punch
       const level = Math.min(1, music.bass * 1.4);
-      effects.applyTopRowVU(level, palette, colorDirection);
+      effects.applyTopRowVU(level, palette, colorDirection, gradientSpeed, customColors);
       if (sendToKeyboard) sendTopRowFrame(effects.colorBuffer);
       return; // skip the generic sendFrame below
     } else {

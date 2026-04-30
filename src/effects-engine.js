@@ -34,6 +34,7 @@ export class EffectsEngine {
     this.color1 = { r: 255, g: 0, b: 0 };
     this.color2 = { r: 0, g: 0, b: 255 };
     this.direction = 'left';
+    this.gradientSpeed = 0.28;
 
     // Key state for reactive effects
     this.keyStates = new Array(KEYBOARD_LAYOUT.rows).fill(null)
@@ -52,6 +53,7 @@ export class EffectsEngine {
   setSpeed(val) { this.speed = val; }
   setBrightness(val) { this.brightness = val; }
   setDirection(val) { this.direction = val; }
+  setGradientSpeed(val) { this.gradientSpeed = val / 250; }
 
   setColor1(hex) {
     this.color1 = hexToRgb(hex);
@@ -323,7 +325,7 @@ export class EffectsEngine {
     return Math.max(0, Math.min(1, value));
   }
 
-  _applyMusicalField(bands, bass, mid, treble, palette, style = 'fluid', colorDirection = 'right-to-left') {
+  _applyMusicalField(bands, bass, mid, treble, palette, style = 'fluid', colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
     const br = this.brightness / 255;
     const energy = this._clamp01(bass * 0.5 + mid * 0.34 + treble * 0.24);
     const styleGain = style === 'equalizer' ? 1.18 : style === 'chunky' ? 1.28 : 1.08;
@@ -352,7 +354,7 @@ export class EffectsEngine {
         return;
       }
 
-      const color = this._frequencyColor(palette, key.nx, colorDirection, this.elapsed);
+      const color = this._frequencyColor(palette, key.nx, colorDirection, this.elapsed, gradientSpeed, customColors);
       this.colorBuffer[r][c] = {
         r: color.r * intensity * br,
         g: color.g * intensity * br,
@@ -361,16 +363,25 @@ export class EffectsEngine {
     });
   }
 
-  _frequencyColor(palette, nx, colorDirection = 'right-to-left', time = 0) {
+  _frequencyColor(palette, nx, colorDirection = 'right-to-left', time = 0, gradientSpeed = 0.28, customColors = null) {
     const basePosition = colorDirection === 'left-to-right' ? nx : 1 - nx;
-    const motion = colorDirection === 'left-to-right' ? time * 0.28 : -time * 0.28;
+    const motion = colorDirection === 'left-to-right' ? time * gradientSpeed : -time * gradientSpeed;
     const position = (basePosition + motion + 1) % 1;
     const smoothMix = (1 - Math.cos(position * Math.PI * 2)) / 2;
     switch (palette) {
       case 'fire': return lerpColor({ r: 255, g: 230, b: 60 }, { r: 255, g: 20, b: 0 }, smoothMix);
       case 'ocean': return lerpColor({ r: 0, g: 255, b: 255 }, { r: 0, g: 40, b: 220 }, smoothMix);
       case 'neon': return lerpColor({ r: 170, g: 0, b: 255 }, { r: 255, g: 0, b: 170 }, smoothMix);
-      case 'custom': return lerpColor(this.color1, this.color2, smoothMix);
+      case 'custom':
+        if (customColors && customColors.length >= 2) {
+          const stops = customColors.map(h => hexToRgb(h));
+          const stopCount = stops.length;
+          const idx = position * (stopCount - 1);
+          const lo = Math.floor(idx);
+          const hi = Math.min(stopCount - 1, lo + 1);
+          return lerpColor(stops[lo], stops[hi], idx - lo);
+        }
+        return lerpColor(this.color1, this.color2, smoothMix);
       default:
         return hslToRgb(position, 1.0, 0.5);
     }
@@ -380,8 +391,8 @@ export class EffectsEngine {
    * Equalizer: 16 smooth frequency bands projected onto the keyboard's staggered
    * physical key geometry. Bass lives on the right, treble on the left.
    */
-  applyEqualizer(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left') {
-    this._applyMusicalField(bands, bass, mid, treble, palette, 'equalizer', colorDirection);
+  applyEqualizer(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    this._applyMusicalField(bands, bass, mid, treble, palette, 'equalizer', colorDirection, gradientSpeed, customColors);
   }
 
   /**
@@ -390,7 +401,7 @@ export class EffectsEngine {
    * @param {number} level  0-1 overall music level
    * @param {string} palette
    */
-  applyTopRowVU(level, palette, colorDirection = 'right-to-left') {
+  applyTopRowVU(level, palette, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
     const br = this.brightness / 255;
     const cols = KEYBOARD_LAYOUT.cols; // 16 (but row 0 has 15 physical keys, cols 0-14)
     const rows = KEYBOARD_LAYOUT.rows;
@@ -412,13 +423,24 @@ export class EffectsEngine {
 
       // Color: rainbow across the top row — leftmost=red, rightmost=violet
       const position = col / (TOP_ROW_KEYS - 1); // 0=Esc(left), 1=Ins(right)
-      const motion = colorDirection === 'left-to-right' ? this.elapsed * 0.28 : -this.elapsed * 0.28;
+      const motion = colorDirection === 'left-to-right' ? this.elapsed * gradientSpeed : -this.elapsed * gradientSpeed;
       const hue = (colorDirection === 'left-to-right' ? position + motion : 1 - position + motion + 1) % 1;
       let color;
       switch (palette) {
         case 'fire':   color = lerpColor({ r: 255, g: 255, b: 100 }, { r: 255, g: 20, b: 0 }, hue); break;
         case 'ocean':  color = lerpColor({ r: 120, g: 255, b: 220 }, { r: 0, g: 0, b: 200 }, hue); break;
         case 'neon':   color = lerpColor({ r: 100, g: 255, b: 80  }, { r: 255, g: 0, b: 180 }, hue); break;
+        case 'custom':
+          if (customColors && customColors.length >= 2) {
+            const stops = customColors.map(h => hexToRgb(h));
+            const idx = hue * (stops.length - 1);
+            const lo = Math.floor(idx);
+            const hi = Math.min(stops.length - 1, lo + 1);
+            color = lerpColor(stops[lo], stops[hi], idx - lo);
+          } else {
+            color = lerpColor(this.color1, this.color2, hue);
+          }
+          break;
         default:       color = hslToRgb(hue * 0.8, 1.0, 0.5); break; // rainbow
       }
 
@@ -475,8 +497,8 @@ export class EffectsEngine {
    * Every band has its own distinct fixed color + bright peak key at the bar top.
    * @param {Float32Array} bands - 8 smoothed levels (0-1), index 0=bass, 7=treble
    */
-  applyChunkyEQ(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left') {
-    this._applyMusicalField(bands, bass, mid, treble, palette, 'chunky', colorDirection);
+  applyChunkyEQ(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    this._applyMusicalField(bands, bass, mid, treble, palette, 'chunky', colorDirection, gradientSpeed, customColors);
   }
 
   /**
@@ -530,8 +552,139 @@ export class EffectsEngine {
   }
 
   /** Website light option: LightMusicFollow2 / "Music Sync" variant "upright". */
-  applyMusicSyncUpright(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left') {
-    this._applyMusicalField(bands, bass, mid, treble, palette, 'fluid', colorDirection);
+  applyMusicSyncUpright(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    this._applyMusicalField(bands, bass, mid, treble, palette, 'fluid', colorDirection, gradientSpeed, customColors);
+  }
+
+  /**
+   * 5-Column Split — keyboard physically divided into 5 frequency zones left→right.
+   * Respects row stagger. Each zone gets its own band. Sharp, no bleed between zones.
+   */
+  applyColumnSplit(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+    const ZONES = 5;
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      const zone = Math.min(ZONES - 1, Math.floor(key.nx * ZONES));
+      const bandIdx = Math.round((zone / (ZONES - 1)) * (bands.length - 1));
+      const bandLevel = this._clamp01(bands[Math.min(bandIdx, bands.length - 1)] || 0);
+      if (bandLevel < 0.05) return;
+
+      // Tight bar: only the fraction near the band level lights up
+      const bar = key.ny <= bandLevel ? 1 : Math.max(0, 1 - (key.ny - bandLevel) / 0.12);
+      const intensity = this._clamp01(bar * bandLevel);
+      if (intensity < 0.04) return;
+
+      const colorPos = colorDirection === 'left-to-right'
+        ? (zone / (ZONES - 1) + this.elapsed * gradientSpeed) % 1
+        : (1 - zone / (ZONES - 1) - this.elapsed * gradientSpeed + 1) % 1;
+      const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
+  /**
+   * Ridge Line — a sharp thin line at the frequency level sweeping across.
+   * Extremely focused — only the row closest to the frequency level lights up.
+   */
+  applyRidgeLine(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+    const energy = this._clamp01(bass * 0.4 + mid * 0.35 + treble * 0.25);
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      const bandLevel = this._sampleFrequencyAt(bands, key.nx);
+      if (bandLevel < 0.06) return;
+
+      // Only the row at the band level lights up — ±1 row max
+      const targetRow = (1 - bandLevel) * (KEYBOARD_LAYOUT.rows - 1);
+      const dist = Math.abs(r - targetRow);
+      const focus = dist < 0.6 ? 1 : dist < 1.2 ? 0.6 : 0;
+      if (focus <= 0) return;
+
+      const intensity = this._clamp01(focus * bandLevel);
+      if (intensity < 0.04) return;
+
+      const colorPos = colorDirection === 'left-to-right'
+        ? (key.nx + this.elapsed * gradientSpeed) % 1
+        : (1 - key.nx - this.elapsed * gradientSpeed + 1) % 1;
+      const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
+  /**
+   * Bass Floor — only bottom 2 physical rows react to bass. Sharp, no upper glow.
+   * Row stagger means bottom rows are slightly to the right.
+   */
+  applyBassFloor(_bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+    const bassPower = this._clamp01(bass * 1.2);
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      if (bassPower < 0.04) return;
+
+      // Only rows 3–4 (bottom two physical rows) light up
+      const rowFade = r === 4 ? 1 : r === 3 ? 0.65 : 0;
+      if (rowFade <= 0) return;
+
+      // Treble adds subtle right-side energy (higher rows on right side of stagger)
+      const trebleBoost = this._clamp01(treble * 0.3) * (key.nx > 0.7 ? 0.4 : 0);
+      const intensity = this._clamp01(bassPower * rowFade + trebleBoost);
+      if (intensity < 0.035) return;
+
+      const colorPos = colorDirection === 'left-to-right'
+        ? (key.nx * 0.6 + this.elapsed * gradientSpeed * 0.25) % 1
+        : (1 - key.nx * 0.6 - this.elapsed * gradientSpeed * 0.25 + 1) % 1;
+      const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
+  /**
+   * Sharp Bars — like Equalizer but with very tight bars. Only rows at/below
+   * frequency level light up; above stays black. Physically-aware stagger.
+   */
+  applySharpBars(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      const bandLevel = this._sampleFrequencyAt(bands, key.nx);
+      if (bandLevel < 0.04) return;
+
+      // Very sharp: key must be at or below the band level
+      const barHeight = 1 - key.ny;
+      const cutoff = bandLevel * 0.95;
+      const bar = barHeight <= cutoff ? 1 : Math.max(0, 1 - (barHeight - cutoff) / 0.08);
+      const peak = Math.abs(barHeight - cutoff) < 0.06 ? 0.7 : 0;
+      const intensity = this._clamp01(bar * bandLevel + peak);
+      if (intensity < 0.04) return;
+
+      const colorPos = colorDirection === 'left-to-right'
+        ? (key.nx * 0.7 + this.elapsed * gradientSpeed * 0.4) % 1
+        : (1 - key.nx * 0.7 - this.elapsed * gradientSpeed * 0.4 + 1) % 1;
+      const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
   }
 
   /** Website light option: LightMusicFollow2 / "Music Sync" variant "separate". */
