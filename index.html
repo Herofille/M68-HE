@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KB RGB Controller — HID Protocol Analyzer & Effects Engine</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h1 class="logo">⌨️ <span class="logo-text">KB<span class="accent">RGB</span></span></h1>
+        <span class="subtitle">WebHID Protocol Analyzer & Effects Engine</span>
+      </div>
+      <div class="header-right">
+        <div id="connection-status" class="status disconnected">
+          <span class="status-dot"></span>
+          <span class="status-text">Disconnected</span>
+        </div>
+        <button type="button" id="btn-connect" class="btn btn-primary">Connect Keyboard</button>
+        <button type="button" id="btn-disconnect" class="btn btn-danger hidden">Disconnect</button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button type="button" class="tab active" data-tab="explorer">Device Explorer</button>
+      <button type="button" class="tab" data-tab="sniffer">Packet Sniffer</button>
+      <button type="button" class="tab" data-tab="sender">Command Sender</button>
+      <button type="button" class="tab" data-tab="effects">RGB Effects</button>
+      <button type="button" class="tab" data-tab="music">Music Reactive</button>
+      <button type="button" class="tab" data-tab="keyboard">Keyboard Preview</button>
+    </nav>
+
+    <!-- Tab Panels -->
+    <main class="panels">
+
+      <!-- Device Explorer -->
+      <section id="panel-explorer" class="panel active">
+        <div class="panel-header">
+          <h2>Device Explorer</h2>
+          <p class="hint">Connect your keyboard to explore its HID interfaces, collections, and report descriptors.</p>
+        </div>
+        <div id="device-info" class="card">
+          <div class="placeholder">No device connected. Click "Connect Keyboard" above.</div>
+        </div>
+        <div id="collections-list" class="card hidden">
+          <h3>HID Collections</h3>
+          <div id="collections-content"></div>
+        </div>
+        <div class="card">
+          <h3>Diagnostic Probe</h3>
+          <p class="hint">Systematically test all available report IDs and types to find what the keyboard accepts. Watch your keyboard LEDs while running!</p>
+          <button type="button" id="btn-run-diagnostic" class="btn btn-primary">Run Full Diagnostic</button>
+          <button type="button" id="btn-stop-diagnostic" class="btn btn-danger hidden">Stop</button>
+          <div id="diagnostic-log" class="log-container" style="height: 300px; margin-top: 12px;">
+            <div class="log-empty">Click "Run Full Diagnostic" to probe the keyboard...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Packet Sniffer -->
+      <section id="panel-sniffer" class="panel">
+        <div class="panel-header">
+          <h2>Packet Sniffer</h2>
+          <p class="hint">Capture incoming HID reports from the keyboard in real-time.</p>
+        </div>
+        <div class="toolbar">
+          <button type="button" id="btn-start-capture" class="btn btn-success">▶ Start Capture</button>
+          <button type="button" id="btn-stop-capture" class="btn btn-warning hidden">⏸ Stop Capture</button>
+          <button type="button" id="btn-clear-capture" class="btn btn-ghost">Clear</button>
+          <label class="toolbar-option">
+            <input type="checkbox" id="chk-auto-scroll" checked /> Auto-scroll
+          </label>
+          <label class="toolbar-option">
+            <input type="checkbox" id="chk-hex-display" checked /> Hex display
+          </label>
+          <span id="packet-count" class="badge">0 packets</span>
+        </div>
+        <div id="packet-log" class="log-container">
+          <div class="log-empty">Start capture to see incoming HID reports...</div>
+        </div>
+      </section>
+
+      <!-- Command Sender -->
+      <section id="panel-sender" class="panel">
+        <div class="panel-header">
+          <h2>Command Sender</h2>
+          <p class="hint">Send custom HID output/feature reports to the keyboard to discover RGB control commands.</p>
+        </div>
+        <div class="sender-grid">
+          <div class="card">
+            <h3>Send Report</h3>
+            <div class="form-group">
+              <label>Report Type</label>
+              <select id="report-type">
+                <option value="output">Output Report</option>
+                <option value="feature">Feature Report</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Report ID (decimal)</label>
+              <input type="number" id="report-id" value="0" min="0" max="255" />
+            </div>
+            <div class="form-group">
+              <label>Data (hex bytes, space separated)</label>
+              <textarea id="report-data" rows="4" placeholder="e.g. 07 0A FF 00 00 FF 64"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Repeat</label>
+              <div class="inline-group">
+                <input type="number" id="repeat-count" value="1" min="1" max="100" />
+                <span>times, every</span>
+                <input type="number" id="repeat-interval" value="100" min="10" max="5000" />
+                <span>ms</span>
+              </div>
+            </div>
+            <button type="button" id="btn-send-report" class="btn btn-primary">Send Report</button>
+            <button type="button" id="btn-stop-repeat" class="btn btn-danger hidden">Stop</button>
+          </div>
+          <div class="card">
+            <h3>Saved Commands</h3>
+            <p class="hint">Save working commands for reuse. These persist in localStorage.</p>
+            <div class="form-group">
+              <label>Command Name</label>
+              <input type="text" id="cmd-name" placeholder="e.g. Set All Red" />
+            </div>
+            <button type="button" id="btn-save-cmd" class="btn btn-success">Save Current</button>
+            <div id="saved-commands-list" class="saved-list"></div>
+          </div>
+          <div class="card">
+            <h3>Quick Presets (Reverse-Engineered Protocol)</h3>
+            <p class="hint">Protocol-aware commands for your Step One HE / M68 HE keyboard. Click to send directly!</p>
+            <div id="preset-buttons" class="preset-grid"></div>
+          </div>
+          <div class="card">
+            <h3>🔬 Effect Mode Tester</h3>
+            <p class="hint">Cycle through mode IDs 0x00–0x0F to discover which ID triggers which keyboard effect. Note what you see!</p>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+              <button type="button" id="btn-mode-prev" class="btn" style="width:40px;">◀</button>
+              <span id="mode-tester-display" style="font-family: monospace; font-size: 1.3rem; font-weight: bold; min-width: 120px; text-align: center;">Mode 0x00</span>
+              <button type="button" id="btn-mode-next" class="btn" style="width:40px;">▶</button>
+              <button type="button" id="btn-mode-send" class="btn btn-primary">Send Mode</button>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 10px;">
+              <label style="font-size: 0.8rem;">Color:</label>
+              <input type="color" id="mode-tester-color" value="#ff0000" style="width: 40px; height: 30px;" />
+              <label style="font-size: 0.8rem;">Speed:</label>
+              <input type="range" id="mode-tester-speed" min="1" max="30" value="13" style="width: 80px;" />
+              <label style="font-size: 0.8rem;">Brightness:</label>
+              <input type="range" id="mode-tester-brightness" min="0" max="100" value="100" style="width: 80px;" />
+            </div>
+            <div id="mode-tester-log" style="font-family: monospace; font-size: 0.75rem; color: var(--text-muted); max-height: 150px; overflow-y: auto; border: 1px solid var(--border); border-radius: 4px; padding: 6px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RGB Effects -->
+      <section id="panel-effects" class="panel">
+        <div class="panel-header">
+          <h2>RGB Effects Engine</h2>
+          <p class="hint">Run custom RGB effects on your keyboard. Requires a known protocol (use Command Sender to discover it first).</p>
+        </div>
+        <div class="effects-grid">
+          <div class="card effects-list-card">
+            <h3>Effects</h3>
+            <div class="effect-item active" data-effect="rainbow-wave">
+              <div class="effect-preview rainbow-wave-preview"></div>
+              <span>Rainbow Wave</span>
+            </div>
+            <div class="effect-item" data-effect="breathing">
+              <div class="effect-preview breathing-preview"></div>
+              <span>Breathing</span>
+            </div>
+            <div class="effect-item" data-effect="color-cycle">
+              <div class="effect-preview color-cycle-preview"></div>
+              <span>Color Cycle</span>
+            </div>
+            <div class="effect-item" data-effect="reactive">
+              <div class="effect-preview reactive-preview"></div>
+              <span>Reactive Typing</span>
+            </div>
+            <div class="effect-item" data-effect="rain">
+              <div class="effect-preview rain-preview"></div>
+              <span>Digital Rain</span>
+            </div>
+            <div class="effect-item" data-effect="gradient">
+              <div class="effect-preview gradient-preview"></div>
+              <span>Static Gradient</span>
+            </div>
+            <div class="effect-item" data-effect="fire">
+              <div class="effect-preview fire-preview"></div>
+              <span>Fire</span>
+            </div>
+            <div class="effect-item" data-effect="ripple">
+              <div class="effect-preview ripple-preview"></div>
+              <span>Ripple</span>
+            </div>
+          </div>
+          <div class="card effects-controls-card">
+            <h3>Controls</h3>
+            <div class="form-group">
+              <label>Speed</label>
+              <input type="range" id="effect-speed" min="1" max="100" value="50" />
+            </div>
+            <div class="form-group">
+              <label>Brightness</label>
+              <input type="range" id="effect-brightness" min="0" max="255" value="200" />
+            </div>
+            <div class="form-group">
+              <label>Primary Color</label>
+              <input type="color" id="effect-color1" value="#ff0000" />
+            </div>
+            <div class="form-group">
+              <label>Secondary Color</label>
+              <input type="color" id="effect-color2" value="#0000ff" />
+            </div>
+            <div class="form-group">
+              <label>Direction</label>
+              <select id="effect-direction">
+                <option value="left">Left → Right</option>
+                <option value="right">Right → Left</option>
+                <option value="up">Top → Bottom</option>
+                <option value="down">Bottom → Top</option>
+                <option value="center">Center Out</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="toolbar-option">
+                <input type="checkbox" id="chk-send-keyboard" /> Send to physical keyboard
+              </label>
+              <span class="hint">Enable to stream RGB frames to your connected keyboard in real-time</span>
+            </div>
+            <button type="button" id="btn-start-effect" class="btn btn-primary">▶ Start Effect</button>
+            <button type="button" id="btn-stop-effect" class="btn btn-danger hidden">⏹ Stop Effect</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Music Reactive -->
+      <section id="panel-music" class="panel">
+        <div class="panel-header">
+          <h2>Music Reactive RGB</h2>
+          <p class="hint">Your keyboard LEDs react to audio in real-time using frequency analysis.</p>
+        </div>
+        <div class="music-grid">
+          <div class="card">
+            <h3>Audio Source</h3>
+            <div class="form-group">
+              <label>Input Source</label>
+              <select id="audio-source">
+                <option value="system-loopback" selected>System Audio (Loopback — no dialog)</option>
+                <option value="microphone">Microphone / Line In</option>
+                <option value="system">System Audio (Screenshare)</option>
+                <option value="file">Audio File</option>
+              </select>
+            </div>
+            <div id="file-input-group" class="form-group hidden">
+              <label>Audio File</label>
+              <input type="file" id="audio-file" accept="audio/*" />
+            </div>
+            <button type="button" id="btn-start-audio" class="btn btn-primary">🎵 Start Listening</button>
+            <button type="button" id="btn-stop-audio" class="btn btn-danger hidden">⏹ Stop</button>
+          </div>
+          <div class="card">
+            <h3>Visualizer</h3>
+            <canvas id="audio-visualizer" width="600" height="200"></canvas>
+            <div class="audio-meters">
+              <div class="meter">
+                <label>Bass</label>
+                <div class="meter-bar"><div id="meter-bass" class="meter-fill bass"></div></div>
+              </div>
+              <div class="meter">
+                <label>Mid</label>
+                <div class="meter-bar"><div id="meter-mid" class="meter-fill mid"></div></div>
+              </div>
+              <div class="meter">
+                <label>Treble</label>
+                <div class="meter-bar"><div id="meter-treble" class="meter-fill treble"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Music Effect Settings</h3>
+            <div class="form-group">
+              <label>Mode</label>
+              <select id="music-mode">
+                <option value="music-sync-upright" selected>🎵 Music Sync — Upright</option>
+                <option value="equalizer">🎛️ Equalizer (16 bands, bars up)</option>
+                <option value="chunky-eq">🟧 Chunky EQ (8 bands, 2 cols each)</option>
+                <option value="top-row-vu">➡️ Top Row VU</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Sensitivity</label>
+              <input type="range" id="music-sensitivity" min="1" max="200" value="100" />
+            </div>
+            <div class="form-group">
+              <label>Smoothing</label>
+              <input type="range" id="music-smoothing" min="0" max="99" value="30" />
+            </div>
+            <div class="form-group">
+              <label>Color Palette</label>
+              <select id="music-palette">
+                <option value="fire">Fire (Red → Yellow)</option>
+                <option value="ocean">Ocean (Blue → Cyan)</option>
+                <option value="neon">Neon (Pink → Cyan)</option>
+                <option value="rainbow">Rainbow</option>
+                <option value="custom">Custom (use primary/secondary)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Color Direction</label>
+              <select id="music-gradient-direction">
+                <option value="right-to-left" selected>Right → Left</option>
+                <option value="left-to-right">Left → Right</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="toolbar-option">
+                <input type="checkbox" id="chk-music-send-keyboard" /> Send to physical keyboard
+              </label>
+              <span class="hint">Stream music-reactive RGB frames to your connected keyboard in real-time</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Keyboard Preview -->
+      <section id="panel-keyboard" class="panel">
+        <div class="panel-header">
+          <h2>Keyboard Preview</h2>
+          <p class="hint">Visual preview of RGB effects on a 65% keyboard layout. Click keys to set individual colors.</p>
+        </div>
+        <div class="keyboard-container">
+          <div id="keyboard-visual" class="keyboard-65"></div>
+        </div>
+        <div class="card" style="margin-top: 16px;">
+          <h3>Live RGB Flicker Monitor</h3>
+          <p class="hint">Reads the keyboard's actual 0xDE live RGB buffer like hedriver.com. Use this while flicker is visible to see which 128 live slots are changing.</p>
+          <div class="toolbar">
+            <button type="button" id="btn-read-live-rgb" class="btn btn-primary">Read Live RGB Once</button>
+            <button type="button" id="btn-start-live-monitor" class="btn btn-success">▶ Start Monitor</button>
+            <button type="button" id="btn-stop-live-monitor" class="btn btn-danger hidden">⏹ Stop Monitor</button>
+            <label class="toolbar-option">
+              Every
+              <input type="number" id="live-monitor-interval" value="16" min="0" max="2000" style="width: 72px;" />
+              ms
+            </label>
+            <span id="live-monitor-status" class="badge">idle</span>
+          </div>
+          <div class="keyboard-container live-keyboard-wrap">
+            <div id="live-keyboard-visual" class="keyboard-65 live-keyboard"></div>
+          </div>
+          <p class="hint" style="margin-top: 10px;">Live slots 68–127 (likely FN/layer/alternate live data; not mapped to base physical keys yet):</p>
+          <div id="live-slot-grid" class="live-extra-slots"></div>
+          <div id="live-monitor-log" class="log-container" style="height: 160px; margin-top: 12px;">
+            <div class="log-empty">Read the live RGB buffer to display device-side slot colors.</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

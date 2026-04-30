@@ -1,0 +1,4616 @@
+[
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 41,
+        "code": -1,
+        "name": "Esc",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 30,
+        "code": -1,
+        "name": "!\n1",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 31,
+        "code": -1,
+        "name": "@\n2",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 32,
+        "code": -1,
+        "name": "#\n3",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 33,
+        "code": -1,
+        "name": "$\n4",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 34,
+        "code": -1,
+        "name": "%\n5",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 35,
+        "code": -1,
+        "name": "^\n6",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 36,
+        "code": -1,
+        "name": "&\n7",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 37,
+        "code": -1,
+        "name": "*\n8",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 38,
+        "code": -1,
+        "name": "(\n9",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 39,
+        "code": -1,
+        "name": ")\n0",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 45,
+        "code": -1,
+        "name": "_\n-",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 43,
+        "code": -1,
+        "name": "Tab",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 20,
+        "code": -1,
+        "name": "Q",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 26,
+        "code": -1,
+        "name": "W",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 8,
+        "code": -1,
+        "name": "E",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 21,
+        "code": -1,
+        "name": "R",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 23,
+        "code": -1,
+        "name": "T",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 28,
+        "code": -1,
+        "name": "Y",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 24,
+        "code": -1,
+        "name": "U",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 12,
+        "code": -1,
+        "name": "I",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 18,
+        "code": -1,
+        "name": "O",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 19,
+        "code": -1,
+        "name": "P",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 47,
+        "code": -1,
+        "name": "{\n[",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 57,
+        "code": -1,
+        "name": "Caps",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 4,
+        "code": -1,
+        "name": "A",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 22,
+        "code": -1,
+        "name": "S",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 7,
+        "code": -1,
+        "name": "D",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 9,
+        "code": -1,
+        "name": "F",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 10,
+        "code": -1,
+        "name": "G",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 11,
+        "code": -1,
+        "name": "H",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 13,
+        "code": -1,
+        "name": "J",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 14,
+        "code": -1,
+        "name": "K",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 15,
+        "code": -1,
+        "name": "L",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 51,
+        "code": -1,
+        "name": ":\n;",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 52,
+        "code": -1,
+        "name": "\"\n'",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 2,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 29,
+        "code": -1,
+        "name": "Z",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 27,
+        "code": -1,
+        "name": "X",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 6,
+        "code": -1,
+        "name": "C",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 25,
+        "code": -1,
+        "name": "V",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 5,
+        "code": -1,
+        "name": "B",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 17,
+        "code": -1,
+        "name": "N",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 16,
+        "code": -1,
+        "name": "M",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 54,
+        "code": -1,
+        "name": "<\n,",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 55,
+        "code": -1,
+        "name": ">\n.",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 56,
+        "code": -1,
+        "name": "?\n/",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 32,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 1,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 8,
+        "code2": 0,
+        "code": -1,
+        "name": "WIN",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 4,
+        "code2": 0,
+        "code": -1,
+        "name": "ALT",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 44,
+        "code": -1,
+        "name": "Space",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 64,
+        "code2": 0,
+        "code": -1,
+        "name": "ALT",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 240,
+        "code1": 255,
+        "code2": 9,
+        "code": -1,
+        "name": "FN9",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 16,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 80,
+        "code": -1,
+        "name": "←",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 81,
+        "code": -1,
+        "name": "↓",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 82,
+        "code": -1,
+        "name": "↑",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 79,
+        "code": -1,
+        "name": "→",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 78,
+        "code": -1,
+        "name": "PgDn",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 46,
+        "code": -1,
+        "name": "+\n=",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 42,
+        "code": -1,
+        "name": "Back",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 73,
+        "code": -1,
+        "name": "Ins",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 48,
+        "code": -1,
+        "name": "}\n]",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 49,
+        "code": -1,
+        "name": "|\n\\",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 76,
+        "code": -1,
+        "name": "Del",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 40,
+        "code": -1,
+        "name": "Enter",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 75,
+        "code": -1,
+        "name": "PgUp",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 0
+    }
+]
+[
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 41,
+        "code": -1,
+        "name": "Esc",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 58,
+        "code": -1,
+        "name": "F1",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 59,
+        "code": -1,
+        "name": "F2",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 60,
+        "code": -1,
+        "name": "F3",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 61,
+        "code": -1,
+        "name": "F4",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 62,
+        "code": -1,
+        "name": "F5",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 63,
+        "code": -1,
+        "name": "F6",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 64,
+        "code": -1,
+        "name": "F7",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 65,
+        "code": -1,
+        "name": "F8",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 66,
+        "code": -1,
+        "name": "F9",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 67,
+        "code": -1,
+        "name": "F10",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 68,
+        "code": -1,
+        "name": "F11",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 8,
+        "code2": 0,
+        "code": -1,
+        "name": "Reset",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 253,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 252,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 251,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 21,
+        "code": -1,
+        "name": "R",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 53,
+        "code2": 0,
+        "code": -1,
+        "name": "Bright Off",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 60,
+        "code2": 0,
+        "code": -1,
+        "name": "Color-",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 47,
+        "code2": 0,
+        "code": -1,
+        "name": "RGB Mode-",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 56,
+        "code2": 0,
+        "code": -1,
+        "name": "Speed",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 4,
+        "code2": 0,
+        "code": -1,
+        "name": "WinOS",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 5,
+        "code2": 0,
+        "code": -1,
+        "name": "MacOS",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 47,
+        "code": -1,
+        "name": "{\n[",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 57,
+        "code": -1,
+        "name": "Caps",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 4,
+        "code": -1,
+        "name": "A",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 22,
+        "code": -1,
+        "name": "S",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 7,
+        "code": -1,
+        "name": "D",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 9,
+        "code": -1,
+        "name": "F",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 51,
+        "code2": 0,
+        "code": -1,
+        "name": "Bright-",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 50,
+        "code2": 0,
+        "code": -1,
+        "name": "Bright+",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 13,
+        "code": -1,
+        "name": "J",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 14,
+        "code": -1,
+        "name": "K",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 15,
+        "code": -1,
+        "name": "L",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 51,
+        "code": -1,
+        "name": ":\n;",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 52,
+        "code": -1,
+        "name": "\"\n'",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 2,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 48,
+        "code1": 182,
+        "code2": 0,
+        "code": -1,
+        "name": "Prev",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 48,
+        "code1": 181,
+        "code2": 0,
+        "code": -1,
+        "name": "Next",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 48,
+        "code1": 205,
+        "code2": 0,
+        "code": -1,
+        "name": "Play",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 48,
+        "code1": 183,
+        "code2": 0,
+        "code": -1,
+        "name": "Stop",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 48,
+        "code1": 226,
+        "code2": 0,
+        "code": -1,
+        "name": "Mute",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 48,
+        "code1": 234,
+        "code2": 0,
+        "code": -1,
+        "name": "Vol-",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 48,
+        "code1": 233,
+        "code2": 0,
+        "code": -1,
+        "name": "Vol+",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 54,
+        "code": -1,
+        "name": "<\n,",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 55,
+        "code": -1,
+        "name": ">\n.",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 56,
+        "code": -1,
+        "name": "?\n/",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 32,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 1,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 2,
+        "code2": 0,
+        "code": -1,
+        "name": "WinLock",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 4,
+        "code2": 0,
+        "code": -1,
+        "name": "ALT",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 44,
+        "code": -1,
+        "name": "Space",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 64,
+        "code2": 0,
+        "code": -1,
+        "name": "ALT",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 255,
+        "code2": 9,
+        "code": -1,
+        "name": "FN9",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 16,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 80,
+        "code": -1,
+        "name": "←",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 81,
+        "code": -1,
+        "name": "↓",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 82,
+        "code": -1,
+        "name": "↑",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 79,
+        "code": -1,
+        "name": "→",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 77,
+        "code": -1,
+        "name": "End",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 69,
+        "code": -1,
+        "name": "F12",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 240,
+        "code1": 254,
+        "code2": 0,
+        "code": -1,
+        "name": "FN_M",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 53,
+        "code": -1,
+        "name": "~\n`",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 72,
+        "code": -1,
+        "name": "Pause",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 49,
+        "code": -1,
+        "name": "|\n\\",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 70,
+        "code": -1,
+        "name": "Print",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 40,
+        "code": -1,
+        "name": "Enter",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 74,
+        "code": -1,
+        "name": "Home",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 1
+    }
+]
+[
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 41,
+        "code": -1,
+        "name": "Esc",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 30,
+        "code": -1,
+        "name": "!\n1",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 31,
+        "code": -1,
+        "name": "@\n2",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 32,
+        "code": -1,
+        "name": "#\n3",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 33,
+        "code": -1,
+        "name": "$\n4",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 34,
+        "code": -1,
+        "name": "%\n5",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 35,
+        "code": -1,
+        "name": "^\n6",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 36,
+        "code": -1,
+        "name": "&\n7",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 37,
+        "code": -1,
+        "name": "*\n8",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 38,
+        "code": -1,
+        "name": "(\n9",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 39,
+        "code": -1,
+        "name": ")\n0",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 45,
+        "code": -1,
+        "name": "_\n-",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 43,
+        "code": -1,
+        "name": "Tab",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 20,
+        "code": -1,
+        "name": "Q",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 26,
+        "code": -1,
+        "name": "W",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 8,
+        "code": -1,
+        "name": "E",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 21,
+        "code": -1,
+        "name": "R",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 23,
+        "code": -1,
+        "name": "T",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 28,
+        "code": -1,
+        "name": "Y",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 24,
+        "code": -1,
+        "name": "U",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 12,
+        "code": -1,
+        "name": "I",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 18,
+        "code": -1,
+        "name": "O",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 19,
+        "code": -1,
+        "name": "P",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 47,
+        "code": -1,
+        "name": "{\n[",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 57,
+        "code": -1,
+        "name": "Caps",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 4,
+        "code": -1,
+        "name": "A",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 22,
+        "code": -1,
+        "name": "S",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 7,
+        "code": -1,
+        "name": "D",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 9,
+        "code": -1,
+        "name": "F",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 10,
+        "code": -1,
+        "name": "G",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 11,
+        "code": -1,
+        "name": "H",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 13,
+        "code": -1,
+        "name": "J",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 14,
+        "code": -1,
+        "name": "K",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 15,
+        "code": -1,
+        "name": "L",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 51,
+        "code": -1,
+        "name": ":\n;",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 52,
+        "code": -1,
+        "name": "\"\n'",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 2,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 29,
+        "code": -1,
+        "name": "Z",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 27,
+        "code": -1,
+        "name": "X",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 6,
+        "code": -1,
+        "name": "C",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 25,
+        "code": -1,
+        "name": "V",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 5,
+        "code": -1,
+        "name": "B",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 17,
+        "code": -1,
+        "name": "N",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 16,
+        "code": -1,
+        "name": "M",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 54,
+        "code": -1,
+        "name": "<\n,",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 55,
+        "code": -1,
+        "name": ">\n.",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 56,
+        "code": -1,
+        "name": "?\n/",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 32,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 1,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 4,
+        "code2": 0,
+        "code": -1,
+        "name": "ALT",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 8,
+        "code2": 0,
+        "code": -1,
+        "name": "WIN",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 44,
+        "code": -1,
+        "name": "Space",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 128,
+        "code2": 0,
+        "code": -1,
+        "name": "WIN",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 240,
+        "code1": 255,
+        "code2": 11,
+        "code": -1,
+        "name": "FN11",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 16,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 80,
+        "code": -1,
+        "name": "←",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 81,
+        "code": -1,
+        "name": "↓",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 82,
+        "code": -1,
+        "name": "↑",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 79,
+        "code": -1,
+        "name": "→",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 78,
+        "code": -1,
+        "name": "PgDn",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 46,
+        "code": -1,
+        "name": "+\n=",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 42,
+        "code": -1,
+        "name": "Back",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 73,
+        "code": -1,
+        "name": "Ins",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 48,
+        "code": -1,
+        "name": "}\n]",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 49,
+        "code": -1,
+        "name": "|\n\\",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 76,
+        "code": -1,
+        "name": "Del",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 40,
+        "code": -1,
+        "name": "Enter",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 75,
+        "code": -1,
+        "name": "PgUp",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 2
+    }
+]
+[
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 41,
+        "code": -1,
+        "name": "Esc",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 58,
+        "code": -1,
+        "name": "F1",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 59,
+        "code": -1,
+        "name": "F2",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 60,
+        "code": -1,
+        "name": "F3",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 61,
+        "code": -1,
+        "name": "F4",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 62,
+        "code": -1,
+        "name": "F5",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 63,
+        "code": -1,
+        "name": "F6",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 64,
+        "code": -1,
+        "name": "F7",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 65,
+        "code": -1,
+        "name": "F8",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 66,
+        "code": -1,
+        "name": "F9",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 67,
+        "code": -1,
+        "name": "F10",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 68,
+        "code": -1,
+        "name": "F11",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 8,
+        "code2": 0,
+        "code": -1,
+        "name": "Reset",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 253,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 252,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 251,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 21,
+        "code": -1,
+        "name": "R",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 53,
+        "code2": 0,
+        "code": -1,
+        "name": "Bright Off",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 60,
+        "code2": 0,
+        "code": -1,
+        "name": "Color-",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 47,
+        "code2": 0,
+        "code": -1,
+        "name": "RGB Mode-",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 56,
+        "code2": 0,
+        "code": -1,
+        "name": "Speed",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 4,
+        "code2": 0,
+        "code": -1,
+        "name": "WinOS",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 5,
+        "code2": 0,
+        "code": -1,
+        "name": "MacOS",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 47,
+        "code": -1,
+        "name": "{\n[",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 57,
+        "code": -1,
+        "name": "Caps",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 4,
+        "code": -1,
+        "name": "A",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 22,
+        "code": -1,
+        "name": "S",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 7,
+        "code": -1,
+        "name": "D",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 9,
+        "code": -1,
+        "name": "F",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 51,
+        "code2": 0,
+        "code": -1,
+        "name": "Bright-",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 50,
+        "code2": 0,
+        "code": -1,
+        "name": "Bright+",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 13,
+        "code": -1,
+        "name": "J",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 14,
+        "code": -1,
+        "name": "K",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 15,
+        "code": -1,
+        "name": "L",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 51,
+        "code": -1,
+        "name": ":\n;",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 52,
+        "code": -1,
+        "name": "\"\n'",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 2,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 48,
+        "code1": 182,
+        "code2": 0,
+        "code": -1,
+        "name": "Prev",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 48,
+        "code1": 181,
+        "code2": 0,
+        "code": -1,
+        "name": "Next",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 48,
+        "code1": 205,
+        "code2": 0,
+        "code": -1,
+        "name": "Play",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 48,
+        "code1": 183,
+        "code2": 0,
+        "code": -1,
+        "name": "Stop",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 48,
+        "code1": 226,
+        "code2": 0,
+        "code": -1,
+        "name": "Mute",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 48,
+        "code1": 234,
+        "code2": 0,
+        "code": -1,
+        "name": "Vol-",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 48,
+        "code1": 233,
+        "code2": 0,
+        "code": -1,
+        "name": "Vol+",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 54,
+        "code": -1,
+        "name": "<\n,",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 55,
+        "code": -1,
+        "name": ">\n.",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 56,
+        "code": -1,
+        "name": "?\n/",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 32,
+        "code2": 0,
+        "code": -1,
+        "name": "SHIFT",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 1,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 4,
+        "code2": 0,
+        "code": -1,
+        "name": "ALT",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 8,
+        "code2": 0,
+        "code": -1,
+        "name": "WIN",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 44,
+        "code": -1,
+        "name": "Space",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 128,
+        "code2": 0,
+        "code": -1,
+        "name": "WIN",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 255,
+        "code2": 11,
+        "code": -1,
+        "name": "FN11",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 16,
+        "code2": 0,
+        "code": -1,
+        "name": "CTRL",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 80,
+        "code": -1,
+        "name": "←",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 81,
+        "code": -1,
+        "name": "↓",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 82,
+        "code": -1,
+        "name": "↑",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 79,
+        "code": -1,
+        "name": "→",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 77,
+        "code": -1,
+        "name": "End",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 69,
+        "code": -1,
+        "name": "F12",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 240,
+        "code1": 254,
+        "code2": 0,
+        "code": -1,
+        "name": "FN_M",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 53,
+        "code": -1,
+        "name": "~\n`",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 72,
+        "code": -1,
+        "name": "Pause",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 49,
+        "code": -1,
+        "name": "|\n\\",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 70,
+        "code": -1,
+        "name": "Print",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 40,
+        "code": -1,
+        "name": "Enter",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 74,
+        "code": -1,
+        "name": "Home",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 16,
+        "code1": 0,
+        "code2": 0,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    },
+    {
+        "type": 255,
+        "code1": 255,
+        "code2": 255,
+        "code": -1,
+        "name": "",
+        "profile": 2,
+        "layer": 3
+    }
+]

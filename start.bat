@@ -1,0 +1,3 @@
+@echo off
+echo Starting M68 HE Controller...
+npx electron .
