@@ -1042,7 +1042,22 @@ function startMusicEffect() {
       const level = Math.min(1, music.bass * 1.4);
       effects.applyTopRowVU(level, palette, colorDirection, gradientSpeed, customColors);
       if (sendToKeyboard) sendTopRowFrame(effects.colorBuffer);
-      return; // skip the generic sendFrame below
+      return;
+    } else if (mode === 'rainbow-flow') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyRainbowFlow(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'bass-drop') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyBassDrop(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'freq-peak') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyFreqPeak(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'waterfall') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyWaterfall(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'ripple') {
+      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      effects.applyRipple(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else {
       effects.applyMusicData(music.bass, music.mid, music.treble, mode, palette);
     }

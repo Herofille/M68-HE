@@ -325,6 +325,13 @@ export class EffectsEngine {
     return Math.max(0, Math.min(1, value));
   }
 
+  // JS % preserves negative sign, so (negative % 1) = negative. _wrap01
+  // guarantees the result is always in [0, 1), essential when the running
+  // time/direction terms can push the value below zero.
+  _wrap01(value) {
+    return ((value % 1) + 1) % 1;
+  }
+
   _applyMusicalField(bands, bass, mid, treble, palette, style = 'fluid', colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
     const br = this.brightness / 255;
     const energy = this._clamp01(bass * 0.5 + mid * 0.34 + treble * 0.24);
@@ -366,7 +373,7 @@ export class EffectsEngine {
   _frequencyColor(palette, nx, colorDirection = 'right-to-left', time = 0, gradientSpeed = 0.28, customColors = null) {
     const basePosition = colorDirection === 'left-to-right' ? nx : 1 - nx;
     const motion = colorDirection === 'left-to-right' ? time * gradientSpeed : -time * gradientSpeed;
-    const position = (basePosition + motion + 1) % 1;
+    const position = this._wrap01(basePosition + motion);
     const smoothMix = (1 - Math.cos(position * Math.PI * 2)) / 2;
     switch (palette) {
       case 'fire': return lerpColor({ r: 255, g: 230, b: 60 }, { r: 255, g: 20, b: 0 }, smoothMix);
@@ -424,7 +431,7 @@ export class EffectsEngine {
       // Color: rainbow across the top row — leftmost=red, rightmost=violet
       const position = col / (TOP_ROW_KEYS - 1); // 0=Esc(left), 1=Ins(right)
       const motion = colorDirection === 'left-to-right' ? this.elapsed * gradientSpeed : -this.elapsed * gradientSpeed;
-      const hue = (colorDirection === 'left-to-right' ? position + motion : 1 - position + motion + 1) % 1;
+      const hue = this._wrap01(colorDirection === 'left-to-right' ? position + motion : 1 - position + motion);
       let color;
       switch (palette) {
         case 'fire':   color = lerpColor({ r: 255, g: 255, b: 100 }, { r: 255, g: 20, b: 0 }, hue); break;
@@ -566,19 +573,22 @@ export class EffectsEngine {
 
     this._clearMusicBuffer();
     this._forEachPhysicalKey((r, c, key) => {
+      // Sample spectrum at center of this key's zone for smooth interpolation
       const zone = Math.min(ZONES - 1, Math.floor(key.nx * ZONES));
-      const bandIdx = Math.round((zone / (ZONES - 1)) * (bands.length - 1));
-      const bandLevel = this._clamp01(bands[Math.min(bandIdx, bands.length - 1)] || 0);
-      if (bandLevel < 0.05) return;
+      const zoneNx = Math.min(1, Math.max(0, (zone + 0.5) / ZONES));
+      const zoneLevel = this._sampleFrequencyAt(bands, zoneNx);
+      if (zoneLevel < 0.05) return;
 
       // Tight bar: only the fraction near the band level lights up
-      const bar = key.ny <= bandLevel ? 1 : Math.max(0, 1 - (key.ny - bandLevel) / 0.12);
-      const intensity = this._clamp01(bar * bandLevel);
+      const bar = key.ny <= zoneLevel ? 1 : Math.max(0, 1 - (key.ny - zoneLevel) / 0.12);
+      const intensity = this._clamp01(bar * zoneLevel);
       if (intensity < 0.04) return;
 
-      const colorPos = colorDirection === 'left-to-right'
-        ? (zone / (ZONES - 1) + this.elapsed * gradientSpeed) % 1
-        : (1 - zone / (ZONES - 1) - this.elapsed * gradientSpeed + 1) % 1;
+      const colorPos = this._wrap01(
+        colorDirection === 'left-to-right'
+          ? zone / (ZONES - 1) + this.elapsed * gradientSpeed
+          : 1 - zone / (ZONES - 1) - this.elapsed * gradientSpeed
+      );
       const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
       this.colorBuffer[r][c] = {
         r: color.r * intensity * br,
@@ -610,9 +620,11 @@ export class EffectsEngine {
       const intensity = this._clamp01(focus * bandLevel);
       if (intensity < 0.04) return;
 
-      const colorPos = colorDirection === 'left-to-right'
-        ? (key.nx + this.elapsed * gradientSpeed) % 1
-        : (1 - key.nx - this.elapsed * gradientSpeed + 1) % 1;
+      const colorPos = this._wrap01(
+        colorDirection === 'left-to-right'
+          ? key.nx + this.elapsed * gradientSpeed
+          : 1 - key.nx - this.elapsed * gradientSpeed
+      );
       const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
       this.colorBuffer[r][c] = {
         r: color.r * intensity * br,
@@ -626,26 +638,30 @@ export class EffectsEngine {
    * Bass Floor — only bottom 2 physical rows react to bass. Sharp, no upper glow.
    * Row stagger means bottom rows are slightly to the right.
    */
-  applyBassFloor(_bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+  applyBassFloor(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
     const br = this.brightness / 255;
-    const bassPower = this._clamp01(bass * 1.2);
+    const energy = this._clamp01(bass * 0.2 + mid * 0.15 + treble * 0.1);
 
     this._clearMusicBuffer();
     this._forEachPhysicalKey((r, c, key) => {
-      if (bassPower < 0.04) return;
+      // Sample the actual spectrum at this key's position
+      const bandLevel = this._sampleFrequencyAt(bands, key.nx);
+      if (bandLevel < 0.04 && energy < 0.05) return;
 
-      // Only rows 3–4 (bottom two physical rows) light up
-      const rowFade = r === 4 ? 1 : r === 3 ? 0.65 : 0;
+      // Floor rises with frequency level — bass stays low, treble fills higher rows
+      const floorHeight = bandLevel * 0.9 + energy * 0.25;
+      const barHeight = 1 - key.ny;
+      const rowFade = barHeight <= floorHeight ? 1 : Math.max(0, 1 - (barHeight - floorHeight) / 0.12);
       if (rowFade <= 0) return;
 
-      // Treble adds subtle right-side energy (higher rows on right side of stagger)
-      const trebleBoost = this._clamp01(treble * 0.3) * (key.nx > 0.7 ? 0.4 : 0);
-      const intensity = this._clamp01(bassPower * rowFade + trebleBoost);
+      const intensity = this._clamp01((bandLevel * 0.8 + energy * 0.3) * rowFade);
       if (intensity < 0.035) return;
 
-      const colorPos = colorDirection === 'left-to-right'
-        ? (key.nx * 0.6 + this.elapsed * gradientSpeed * 0.25) % 1
-        : (1 - key.nx * 0.6 - this.elapsed * gradientSpeed * 0.25 + 1) % 1;
+      const colorPos = this._wrap01(
+        colorDirection === 'left-to-right'
+          ? key.nx * 0.6 + this.elapsed * gradientSpeed * 0.25
+          : 1 - key.nx * 0.6 - this.elapsed * gradientSpeed * 0.25
+      );
       const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
       this.colorBuffer[r][c] = {
         r: color.r * intensity * br,
@@ -675,9 +691,11 @@ export class EffectsEngine {
       const intensity = this._clamp01(bar * bandLevel + peak);
       if (intensity < 0.04) return;
 
-      const colorPos = colorDirection === 'left-to-right'
-        ? (key.nx * 0.7 + this.elapsed * gradientSpeed * 0.4) % 1
-        : (1 - key.nx * 0.7 - this.elapsed * gradientSpeed * 0.4 + 1) % 1;
+      const colorPos = this._wrap01(
+        colorDirection === 'left-to-right'
+          ? key.nx * 0.7 + this.elapsed * gradientSpeed * 0.4
+          : 1 - key.nx * 0.7 - this.elapsed * gradientSpeed * 0.4
+      );
       const color = this._frequencyColor(palette, colorPos, colorDirection, 0, gradientSpeed, customColors);
       this.colorBuffer[r][c] = {
         r: color.r * intensity * br,
@@ -687,7 +705,230 @@ export class EffectsEngine {
     });
   }
 
-  /** Website light option: LightMusicFollow2 / "Music Sync" variant "separate". */
+  /**
+   * Rainbow Flow — smooth scrolling rainbow across the keyboard.
+   * Audio energy controls brightness only. Colors flow in the set direction.
+   * Clean, simple, universal — like a desktop visualizer's color sweep.
+   */
+  applyRainbowFlow(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+    const energy = this._clamp01(bass * 0.2 + mid * 0.15 + treble * 0.1);
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      const bandLevel = this._sampleFrequencyAt(bands, key.nx);
+      const intensity = this._clamp01((bandLevel * 0.85 + energy * 0.3) * (0.55 + bandLevel * 0.6));
+      if (intensity < 0.03) return;
+
+      const color = this._frequencyColor(palette, key.nx, colorDirection, this.elapsed, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
+  /**
+   * Bass Drop — bottom-heavy bass response like a subwoofer.
+   * Bass hits light up the bottom rows and ripple upward with quick decay.
+   * Warmer colors on the right, cooler on the left.
+   */
+  applyBassDrop(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      // Sample the actual spectrum — low end (right side, bass frequencies) hits hardest
+      const bandLevel = this._sampleFrequencyAt(bands, key.nx);
+      const bassWeight = 1 - key.nx; // 1 on right (bass), 0 on left (treble)
+      const localHit = this._clamp01(bandLevel * (0.3 + bassWeight * 0.9));
+
+      // Bass drops propagate upward from bottom: bottom row = full, decreasing upward
+      const rowFactor = 1 - key.ny; // 0 at top, 1 at bottom
+      const reach = 0.28 + localHit * 0.55;
+      const inReach = rowFactor >= 0.95 - reach ? 1 : Math.max(0, 1 - (0.95 - reach - rowFactor) / 0.15);
+      const intensity = this._clamp01(localHit * inReach * (0.6 + rowFactor * 0.7));
+      if (intensity < 0.03) return;
+
+      const color = this._frequencyColor(palette, key.nx, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
+  /**
+   * Freq Peak — only the dominant frequency band lights up bright.
+   * Surrounding bands fade softly. Clean and informative — you see exactly
+   * where the energy lives in the spectrum at any moment.
+   */
+  applyFreqPeak(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+
+    // Find the dominant band
+    let peakIdx = 0, peakVal = 0;
+    for (let i = 0; i < bands.length; i++) {
+      if (bands[i] > peakVal) { peakVal = bands[i]; peakIdx = i; }
+    }
+    if (peakVal < 0.06) { this._clearMusicBuffer(); return; }
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      // Map key to band index via nx
+      const bandPos = (1 - key.nx) * (bands.length - 1);
+      const dist = Math.abs(bandPos - peakIdx);
+      // Soft falloff around the dominant band
+      const focus = dist < 1 ? 1 : dist < 2.5 ? 1 - (dist - 1) / 1.5 : 0;
+      const intensity = this._clamp01(focus * peakVal * (0.6 + focus * 0.6));
+      if (intensity < 0.04) return;
+
+      const color = this._frequencyColor(palette, key.nx, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
+  /**
+   * Waterfall — classic audio waterfall visualization.
+   * Current spectrum at the top row, previous frames scroll downward with fade.
+   * Shows the history of the audio spectrum like a scrolling spectrogram.
+   *
+   * Uses a simple internal history buffer for the fade-down effect.
+   */
+  applyWaterfall(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+
+    // Initialize history buffer on first call (or if bands length changes)
+    if (!this._waterfallHistory || this._waterfallHistory.length !== KEYBOARD_LAYOUT.rows || !this._waterfallHistory[0] || this._waterfallHistory[0].length !== bands.length) {
+      this._waterfallHistory = [];
+      for (let r = 0; r < KEYBOARD_LAYOUT.rows; r++) {
+        this._waterfallHistory[r] = new Float32Array(bands.length);
+      }
+    }
+
+    // Shift history down
+    for (let r = KEYBOARD_LAYOUT.rows - 1; r > 0; r--) {
+      for (let i = 0; i < bands.length; i++) {
+        this._waterfallHistory[r][i] = this._waterfallHistory[r - 1][i] * 0.82;
+      }
+    }
+    // Current frame at top
+    for (let i = 0; i < bands.length; i++) {
+      this._waterfallHistory[0][i] = this._clamp01(bands[i] || 0);
+    }
+
+    this._clearMusicBuffer();
+    this._forEachPhysicalKey((r, c, key) => {
+      const bandPos = (1 - key.nx) * (bands.length - 1);
+      const lo = Math.max(0, Math.min(bands.length - 1, Math.floor(bandPos)));
+      const hi = Math.max(0, Math.min(bands.length - 1, lo + 1));
+      const mix = bandPos - lo;
+      const historyVal = (this._waterfallHistory[r][lo] || 0) * (1 - mix) + (this._waterfallHistory[r][hi] || 0) * mix;
+      const intensity = this._clamp01(historyVal * 0.85);
+      if (intensity < 0.025) return;
+
+      const color = this._frequencyColor(palette, key.nx, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
+  /**
+   * Ripple — concentric rings expand outward on beats.
+   * Bass drives ring size and energy. Like ripples on water from a drop.
+   * Each beat creates a new expanding ring. Rings fade naturally, no abrupt resets.
+   */
+  applyRipple(bands, palette, bass = 0, mid = 0, treble = 0, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null) {
+    const br = this.brightness / 255;
+
+    // Peak energy from the actual spectrum
+    let peakVal = 0;
+    for (let i = 0; i < bands.length; i++) {
+      if (bands[i] > peakVal) peakVal = bands[i];
+    }
+    const energy = this._clamp01(peakVal * 1.2 + bass * 0.2 + mid * 0.12);
+
+    // Initialize ring tracker
+    if (!this._rippleRings) this._rippleRings = [];
+    const rings = this._rippleRings;
+    const now = this.elapsed;
+
+    // Spawn new rings continuously — rate proportional to energy
+    const spawnInterval = 0.10 + (1 - energy) * 0.35; // slower rate, cleaner spacing
+    const lastSpawn = rings.length ? rings[rings.length - 1].birthTime : -1;
+    if (energy > 0.06 && now - lastSpawn > spawnInterval) {
+      rings.push({
+        birthTime: now,
+        energy: energy,
+        colorPos: this._wrap01(now * gradientSpeed * 0.6),
+      });
+    }
+
+    // Age and cull rings — shorter lifetime, cleaner
+    const maxLifetime = 0.5 + energy * 0.7;
+    for (let i = rings.length - 1; i >= 0; i--) {
+      const age = now - rings[i].birthTime;
+      if (age > maxLifetime) rings.splice(i, 1);
+    }
+
+    // Cap to 5 rings max — crisp, not overwhelming
+    while (rings.length > 5) rings.shift();
+
+    this._clearMusicBuffer();
+
+    if (rings.length === 0 && energy < 0.03) return;
+
+    // Center respects row stagger
+    const centerX = (KEYBOARD_LAYOUT.keyMap[0].length - 1) / 2 + 0.7;
+
+    this._forEachPhysicalKey((r, c, key) => {
+      const dist = Math.sqrt(
+        ((key.x - centerX) * 0.7) ** 2 +
+        ((key.y - 2) * 1.3) ** 2
+      );
+      const maxDist = 5.5;
+      const normDist = dist / maxDist;
+      const bandLevel = this._sampleFrequencyAt(bands, key.nx);
+
+      // Accumulate from all active rings
+      let totalIntensity = 0;
+      for (const ring of rings) {
+        const age = now - ring.birthTime;
+        const lifetime = maxLifetime;
+        const ringRadius = age / lifetime;
+        const fade = 1 - ringRadius; // outer rings dimmer
+
+        // Ring width tightens as it expands (near rings are wider, far rings thin)
+        const ringWidth = 0.06 + fade * 0.06;
+        const inRing = 1 - Math.min(1, Math.abs(normDist - ringRadius) / ringWidth);
+
+        // Core glow inside very young rings only — tight, quick
+        const coreGlow = ringRadius < 0.08 ? 1 - ringRadius / 0.08 : 0;
+
+        totalIntensity += ring.energy * (inRing * 0.65 + coreGlow * 0.18) * fade;
+      }
+
+      const intensity = this._clamp01(totalIntensity * (0.6 + bandLevel * 0.8));
+      if (intensity < 0.025) return;
+
+      const color = this._frequencyColor(palette, key.nx, colorDirection, 0, gradientSpeed, customColors);
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
   applyMusicSyncSeparate(bands, palette, bass, mid, treble) {
     const br = this.brightness / 255;
     const rows = KEYBOARD_LAYOUT.rows;
@@ -730,7 +971,7 @@ export class EffectsEngine {
         const sweep = Math.max(0, 1 - Math.min(Math.abs(visibleCol - leftPos), Math.abs(visibleCol - rightPos)) / 3);
         const rowPulse = 0.65 + 0.35 * Math.sin(this.elapsed * 7 + r * 1.4);
         const intensity = Math.min(1, sweep * rowPulse * (0.35 + energy * 0.55) + band * 0.45);
-        const color = this._musicSyncColor(palette, (visibleCol / visibleCols + this.elapsed * 0.08) % 1, intensity);
+        const color = this._musicSyncColor(palette, this._wrap01(visibleCol / visibleCols + this.elapsed * 0.08), intensity);
         this.colorBuffer[r][c] = {
           r: color.r * intensity * br,
           g: color.g * intensity * br,
