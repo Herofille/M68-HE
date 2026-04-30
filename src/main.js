@@ -913,6 +913,27 @@ document.getElementById('auto-gain-release').addEventListener('input', (e) => {
   document.getElementById('auto-gain-release-label').textContent = v;
   music.setAutoGainRelease(parseFloat(v));
 });
+
+// Adaptive Freq tuning — only visible when mode is "adaptive-freq"
+document.getElementById('music-mode').addEventListener('change', (e) => {
+  const tune = document.getElementById('adaptive-freq-tune');
+  if (tune) tune.style.display = e.target.value === 'adaptive-freq' ? '' : 'none';
+});
+// Set initial visibility
+(function initAdaptiveFreqVisibility() {
+  const mode = document.getElementById('music-mode').value;
+  const tune = document.getElementById('adaptive-freq-tune');
+  if (tune) tune.style.display = mode === 'adaptive-freq' ? '' : 'none';
+})();
+document.getElementById('adaptive-peak-count').addEventListener('input', (e) => {
+  document.getElementById('adaptive-peak-count-label').textContent = e.target.value;
+});
+document.getElementById('adaptive-threshold').addEventListener('input', (e) => {
+  document.getElementById('adaptive-threshold-label').textContent = e.target.value;
+});
+document.getElementById('adaptive-spread').addEventListener('input', (e) => {
+  document.getElementById('adaptive-spread-label').textContent = e.target.value;
+});
 document.getElementById('music-palette').addEventListener('change', (e) => {
   const group = document.getElementById('custom-colors-group');
   group.style.display = e.target.value === 'custom' ? '' : 'none';
@@ -1077,6 +1098,14 @@ function startMusicEffect() {
     } else if (mode === 'ripple') {
       const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
       effects.applyRipple(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
+    } else if (mode === 'adaptive-freq') {
+      const peakCount = parseInt(document.getElementById('adaptive-peak-count')?.value || '8');
+      const peakThreshold = parseInt(document.getElementById('adaptive-threshold')?.value || '8') / 100;
+      const peakSpread = parseInt(document.getElementById('adaptive-spread')?.value || '12') / 100;
+      const peaks = music.getActivePeaks(peakCount, peakThreshold);
+      effects.applyAdaptiveFreq(peaks, palette, colorDirection, gradientSpeed, customColors, {
+        spread: peakSpread,
+      });
     } else {
       effects.applyMusicData(music.bass, music.mid, music.treble, mode, palette);
     }

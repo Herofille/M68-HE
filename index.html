@@ -300,6 +300,7 @@
                 <option value="freq-peak">📶 Freq Peak</option>
                 <option value="waterfall">💧 Waterfall</option>
                 <option value="ripple">⭕ Ripple</option>
+                <option value="adaptive-freq">🧠 Adaptive Freq</option>
               </select>
             </div>
             <div class="form-group">
@@ -319,6 +320,14 @@
               <input type="range" id="auto-gain-attack" min="5" max="80" value="15" />
               <label style="margin-top:6px">Release Speed: <span id="auto-gain-release-label">3.0</span>s</label>
               <input type="range" id="auto-gain-release" min="5" max="80" value="30" />
+            </div>
+            <div id="adaptive-freq-tune" class="form-group adaptive-freq-tune" style="display:none">
+              <label>Peak Count: <span id="adaptive-peak-count-label">8</span></label>
+              <input type="range" id="adaptive-peak-count" min="3" max="20" value="8" />
+              <label style="margin-top:6px">Sensitivity Threshold: <span id="adaptive-threshold-label">8</span>%</label>
+              <input type="range" id="adaptive-threshold" min="2" max="35" value="8" />
+              <label style="margin-top:6px">Peak Spread: <span id="adaptive-spread-label">12</span>%</label>
+              <input type="range" id="adaptive-spread" min="4" max="40" value="12" />
             </div>
             <div class="form-group">
               <label>Smoothing</label>

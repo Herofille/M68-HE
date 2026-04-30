@@ -325,4 +325,47 @@ export class MusicAnalyzer {
 
     return bands;
   }
+
+  /**
+   * Find dominant frequency peaks in the current spectrum.
+   * Scans FFT bins for local maxima, sorts by intensity, returns top peaks.
+   * @param {number} count   Max peaks to return (default 8)
+   * @param {number} threshold  Minimum normalized intensity 0-1 (default 0.08)
+   * @returns {{freq: number, intensity: number}[]}  Peaks sorted strongest-first
+   */
+  getActivePeaks(count = 8, threshold = 0.08) {
+    if (!this.dataArray || !this.analyser) return [];
+
+    const freqData = this.dataArray;
+    const binCount = freqData.length;
+    const sampleRate = this.audioContext.sampleRate;
+    const nyquist = sampleRate / 2;
+
+    const bandSensitivity = this.autoGain
+      ? this.sensitivity * this._gainFactor
+      : this.sensitivity;
+
+    // Find local maxima (a bin that is >= its neighbours)
+    const peaks = [];
+    for (let i = 1; i < binCount - 1; i++) {
+      const val = (freqData[i] / 255) * bandSensitivity;
+      if (val < threshold) continue;
+      const left  = (freqData[i - 1] / 255) * bandSensitivity;
+      const right = (freqData[i + 1] / 255) * bandSensitivity;
+      if (val >= left && val >= right) {
+        const freq = i / binCount * nyquist;
+        // Sub-pixel parabolic interpolation for more accurate frequency
+        const delta = (right - left) / (2 * (2 * val - left - right) + 0.0001);
+        const fineFreq = (i + delta) / binCount * nyquist;
+        peaks.push({
+          freq: Math.max(20, Math.min(nyquist, fineFreq)),
+          intensity: Math.min(1, val),
+        });
+      }
+    }
+
+    // Sort by intensity descending, take top N
+    peaks.sort((a, b) => b.intensity - a.intensity);
+    return peaks.slice(0, count);
+  }
 }

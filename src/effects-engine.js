@@ -993,6 +993,65 @@ export class EffectsEngine {
     }
   }
 
+  /**
+   * Adaptive Freq — finds dominant frequency peaks from audio and distributes
+   * them across the keyboard's physical geometry. No fixed band splitting —
+   * it reacts to whatever frequencies are actually present in the music.
+   *
+   * @param {{freq:number,intensity:number}[]} peaks   Active frequency peaks
+   * @param {string}  palette
+   * @param {string}  colorDirection
+   * @param {number}  gradientSpeed  How fast the palette scrolls
+   * @param {RGB[]}   customColors   Optional custom gradient stops
+   * @param {object}  opts           Tuning: { peakCount, threshold, spread, decay }
+   */
+  applyAdaptiveFreq(peaks, palette, colorDirection = 'right-to-left', gradientSpeed = 0.28, customColors = null, opts = {}) {
+    const br = this.brightness / 255;
+    const spread = opts.spread ?? 0.12;          // how wide each peak is (0=needle, 0.2=fat bar)
+    const minFreq = 20;
+    const maxFreq = 20000;
+    const logRange = Math.log2(maxFreq / minFreq);
+
+    this._clearMusicBuffer();
+
+    // For each physical key, find the closest frequency peak and light accordingly
+    this._forEachPhysicalKey((r, c, key) => {
+      let totalIntensity = 0;
+      let weightedHue = 0;
+
+      for (const peak of peaks) {
+        if (peak.intensity < 0.02) continue;
+
+        // Map peak frequency to keyboard x-position (log scale, bass=right)
+        const peakNx = 1 - Math.max(0, Math.min(1, Math.log2(peak.freq / minFreq) / logRange));
+
+        // Distance from this key to the peak (in normalized keyboard x)
+        const dist = Math.abs(key.nx - peakNx) / spread;
+        if (dist > 1.5) continue;   // too far from this key
+
+        // Gaussian-ish falloff so peaks don't bleed excessively
+        const contribution = peak.intensity * Math.exp(-dist * dist * 2.5);
+        totalIntensity += contribution;
+        weightedHue += peakNx * contribution;
+      }
+
+      if (totalIntensity < 0.025) {
+        this.colorBuffer[r][c] = { r: 0, g: 0, b: 0 };
+        return;
+      }
+
+      const avgNx = totalIntensity > 0 ? weightedHue / totalIntensity : key.nx;
+      const intensity = Math.min(1, totalIntensity * 1.6);   // boost for visibility
+      const color = this._frequencyColor(palette, avgNx, colorDirection, this.elapsed * gradientSpeed / 0.28, customColors);
+
+      this.colorBuffer[r][c] = {
+        r: color.r * intensity * br,
+        g: color.g * intensity * br,
+        b: color.b * intensity * br,
+      };
+    });
+  }
+
   // Apply music data to color buffer
   applyMusicData(bassLevel, midLevel, trebleLevel, mode, palette) {
     const br = this.brightness / 255;
