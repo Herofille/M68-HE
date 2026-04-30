@@ -894,6 +894,25 @@ audioSourceSelect.addEventListener('change', () => {
 
 document.getElementById('music-sensitivity').addEventListener('input', (e) => music.setSensitivity(parseInt(e.target.value)));
 document.getElementById('music-smoothing').addEventListener('input', (e) => music.setSmoothing(parseInt(e.target.value)));
+document.getElementById('chk-auto-gain').addEventListener('change', (e) => {
+  music.setAutoGain(e.target.checked);
+  document.getElementById('auto-gain-tune').style.display = e.target.checked ? '' : 'none';
+});
+document.getElementById('auto-gain-target').addEventListener('input', (e) => {
+  const v = parseInt(e.target.value);
+  document.getElementById('auto-gain-target-label').textContent = v;
+  music.setAutoGainTarget(v);
+});
+document.getElementById('auto-gain-attack').addEventListener('input', (e) => {
+  const v = (parseInt(e.target.value) / 10).toFixed(1);
+  document.getElementById('auto-gain-attack-label').textContent = v;
+  music.setAutoGainAttack(parseFloat(v));
+});
+document.getElementById('auto-gain-release').addEventListener('input', (e) => {
+  const v = (parseInt(e.target.value) / 10).toFixed(1);
+  document.getElementById('auto-gain-release-label').textContent = v;
+  music.setAutoGainRelease(parseFloat(v));
+});
 document.getElementById('music-palette').addEventListener('change', (e) => {
   const group = document.getElementById('custom-colors-group');
   group.style.display = e.target.value === 'custom' ? '' : 'none';

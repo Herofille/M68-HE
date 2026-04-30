@@ -307,6 +307,20 @@
               <input type="range" id="music-sensitivity" min="1" max="200" value="100" />
             </div>
             <div class="form-group">
+              <label class="toolbar-option">
+                <input type="checkbox" id="chk-auto-gain" checked /> Auto Sensitivity
+              </label>
+              <span class="hint">Automatically adjusts sensitivity so quiet and loud songs have a similar visual impact</span>
+            </div>
+            <div id="auto-gain-tune" class="form-group auto-gain-tune">
+              <label>Target Level: <span id="auto-gain-target-label">45</span>%</label>
+              <input type="range" id="auto-gain-target" min="10" max="85" value="45" />
+              <label style="margin-top:6px">Attack Speed: <span id="auto-gain-attack-label">1.5</span>s</label>
+              <input type="range" id="auto-gain-attack" min="5" max="80" value="15" />
+              <label style="margin-top:6px">Release Speed: <span id="auto-gain-release-label">3.0</span>s</label>
+              <input type="range" id="auto-gain-release" min="5" max="80" value="30" />
+            </div>
+            <div class="form-group">
               <label>Smoothing</label>
               <input type="range" id="music-smoothing" min="0" max="99" value="30" />
             </div>

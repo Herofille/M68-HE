@@ -29,7 +29,32 @@ export class MusicAnalyzer {
     // Per-band smoothing for column spectrum effect
     this._smoothedBands = null;  // Float32Array, lazily initialized
 
+    // Auto gain / automatic sensitivity
+    this.autoGain = false;    // off by default — user toggles via UI
+    this._gainFactor = 1.0;   // current auto-gain multiplier
+    this._runningLevel = 0;   // slow-responding average of overall energy
+    this._gainAttackTC = 1.5; // seconds — how fast gain rises when level is low
+    this._gainReleaseTC = 3.0;// seconds — slower when level is high (avoid pumping)
+    this._targetLevel = 0.45; // target average adjusted level ~45%
+
     this.onUpdate = null;
+  }
+
+  setAutoGain(enabled) {
+    this.autoGain = enabled;
+    if (!enabled) this._gainFactor = 1.0;
+  }
+
+  setAutoGainTarget(val) {
+    this._targetLevel = Math.max(0.05, Math.min(0.9, val / 100));
+  }
+
+  setAutoGainAttack(seconds) {
+    this._gainAttackTC = Math.max(0.3, Math.min(10, seconds));
+  }
+
+  setAutoGainRelease(seconds) {
+    this._gainReleaseTC = Math.max(0.3, Math.min(10, seconds));
   }
 
   async startMicrophone() {
@@ -141,13 +166,36 @@ export class MusicAnalyzer {
     const midAvg = (midEnd - bassEnd) > 0 ? midSum / (midEnd - bassEnd) / 255 : 0;
     const trebleAvg = (len - midEnd) > 0 ? trebleSum / (len - midEnd) / 255 : 0;
 
-    // Apply sensitivity
-    const rawBass = Math.min(1, bassAvg * this.sensitivity);
-    const rawMid = Math.min(1, midAvg * this.sensitivity);
-    const rawTreble = Math.min(1, trebleAvg * this.sensitivity);
+    // ── Auto gain / automatic sensitivity ──────────────────────────────
+    const now = performance.now();
+
+    const effectiveSensitivity = this.autoGain
+      ? this.sensitivity * this._gainFactor
+      : this.sensitivity;
+
+    // Track a slow average of the total energy across the whole spectrum.
+    // The gain factor adjusts so the average lands near _targetLevel.
+    if (this.autoGain) {
+      const totalAvg = bassSum + midSum + trebleSum;
+      const normalized = totalAvg / (len * 255); // 0-1 rough
+      const gainDt = Math.min((now - this._lastAnalyzeTime) / 1000, 0.1);
+      const gainRate = 1 - Math.exp(-gainDt / (normalized > this._runningLevel ? this._gainAttackTC : this._gainReleaseTC));
+      this._runningLevel += (normalized - this._runningLevel) * gainRate;
+
+      if (this._runningLevel > 0.005) {
+        const desired = this._targetLevel / Math.max(0.01, this._runningLevel * this.sensitivity);
+        const gainRate2 = 1 - Math.exp(-gainDt / this._gainAttackTC);
+        this._gainFactor += (desired - this._gainFactor) * gainRate2;
+        this._gainFactor = Math.max(0.25, Math.min(4.0, this._gainFactor));
+      }
+    }
+
+    // Apply sensitivity (with auto-gain multiplier if active)
+    const rawBass = Math.min(1, bassAvg * effectiveSensitivity);
+    const rawMid = Math.min(1, midAvg * effectiveSensitivity);
+    const rawTreble = Math.min(1, trebleAvg * effectiveSensitivity);
 
     // Time-based envelope: compute dt so result is fps-independent
-    const now = performance.now();
     const dt = this._lastAnalyzeTime ? Math.min((now - this._lastAnalyzeTime) / 1000, 0.1) : 1/60;
     this._lastAnalyzeTime = now;
     const attackRate  = 1 - Math.exp(-dt / this._attackTC);
@@ -269,7 +317,10 @@ export class MusicAnalyzer {
         count++;
       }
 
-      bands[i] = count > 0 ? Math.min(1, (sum / count / 255) * this.sensitivity) : 0;
+      const bandSensitivity = this.autoGain
+        ? this.sensitivity * this._gainFactor
+        : this.sensitivity;
+      bands[i] = count > 0 ? Math.min(1, (sum / count / 255) * bandSensitivity) : 0;
     }
 
     return bands;
