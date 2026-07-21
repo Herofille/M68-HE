@@ -564,6 +564,44 @@ export class EffectsEngine {
   }
 
   /**
+   * Screen Mirror — maps captured screen pixel grid directly to physical keyboard keys.
+   * @param {Array<Array<{r:number,g:number,b:number}>>} grid - 5-row × 16-col color grid from ScreenAnalyzer
+   */
+  applyScreenMirror(grid) {
+    if (!grid || !grid.length) return;
+    // Raw pass-through with brightness headroom.  The keyboard is capable of
+    // full color — we just push brightness enough to look vivid on LEDs.
+    const BOOST = 1.5;
+
+    this._forEachPhysicalKey((r, c) => {
+      if (r < grid.length && c < grid[r].length) {
+        const px = grid[r][c];
+        let rv = Math.min(254, px.r * BOOST);
+        let gv = Math.min(254, px.g * BOOST);
+        let bv = Math.min(254, px.b * BOOST);
+
+        // Near-white fix: this keyboard shows cyan at equal RGB.
+        // Warm up pixels that are mostly white (>80% brightness, near-neutral)
+        // so they look natural instead of teal.
+        const avg = (rv + gv + bv) / 3;
+        if (avg > 140) {
+          const max = Math.max(rv, gv, bv);
+          const min = Math.min(rv, gv, bv);
+          const spread = max - min;
+          if (spread < 60) {
+            // Near-neutral → gently boost red
+            rv = Math.min(254, rv * 1.25 + 20);
+            gv = Math.min(254, gv * 0.95);
+            bv = Math.min(254, bv * 0.85);
+          }
+        }
+
+        this.colorBuffer[r][c] = { r: rv, g: gv, b: bv };
+      }
+    });
+  }
+
+  /**
    * 5-Column Split — keyboard physically divided into 5 frequency zones left→right.
    * Respects row stagger. Each zone gets its own band. Sharp, no bleed between zones.
    */
@@ -580,7 +618,7 @@ export class EffectsEngine {
       if (zoneLevel < 0.05) return;
 
       // Tight bar: only the fraction near the band level lights up
-      const bar = key.ny <= zoneLevel ? 1 : Math.max(0, 1 - (key.ny - zoneLevel) / 0.12);
+      const bar = (1 - key.ny) <= zoneLevel ? 1 : Math.max(0, 1 - ((1 - key.ny) - zoneLevel) / 0.12);
       const intensity = this._clamp01(bar * zoneLevel);
       if (intensity < 0.04) return;
 

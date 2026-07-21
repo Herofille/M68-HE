@@ -368,4 +368,24 @@ export class MusicAnalyzer {
     peaks.sort((a, b) => b.intensity - a.intensity);
     return peaks.slice(0, count);
   }
+
+  /**
+   * Smooth peak-derived bands over time so they drift rather than snap.
+   * Call once per frame with the result of peaksToBands().
+   * Uses a gentle attack/release — not the fast audio envelope.
+   */
+  smoothSmartBands(rawBands, numBands) {
+    const N = rawBands.length || numBands;
+    if (!this._smartBandsBuf || this._smartBandsBuf.length !== N) {
+      this._smartBandsBuf = new Float32Array(N);
+    }
+    const attackRate = 0.18;
+    const releaseRate = 0.09;
+    for (let i = 0; i < N; i++) {
+      const diff = rawBands[i] - this._smartBandsBuf[i];
+      const rate = diff > 0 ? attackRate : releaseRate;
+      this._smartBandsBuf[i] += diff * rate;
+    }
+    return this._smartBandsBuf;
+  }
 }

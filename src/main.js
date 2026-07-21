@@ -1,6 +1,7 @@
 import { HIDManager } from './hid-manager.js';
 import { EffectsEngine, KEYBOARD_LAYOUT, rgbToHex } from './effects-engine.js';
 import { MusicAnalyzer } from './music-analyzer.js';
+import { ScreenAnalyzer } from './screen-analyzer.js';
 import { decodePacket, colorBufferToRGBArray, sendRGBFrame, interpolateRGB, resetFrameDelta, setStreamMode, sendColorPulse, writeSolidColorSetup, sendEffectConfig, sendSolidColor, sendAllOff, readLightConfig, readLiveRGBFrame, parseLiveRGBChunk, sendStartFastModel, sendEndFastModel, sendCustomMode, buildOutputPacket, EFFECT_MODES, K68_LED_MAP } from './protocol.js';
 import { HIDWebSocketClient } from './hid-ws-client.js';
 
@@ -8,6 +9,7 @@ import { HIDWebSocketClient } from './hid-ws-client.js';
 const hid = new HIDManager();
 const effects = new EffectsEngine();
 const music = new MusicAnalyzer();
+const screen = new ScreenAnalyzer();
 const wsHid = new HIDWebSocketClient();
 
 let repeatTimer = null;
@@ -29,6 +31,12 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.panel').forEach(p => { p.classList.remove('active'); });
     tab.classList.add('active');
     document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+    // Show/hide screen mirror preview based on current mode
+    if (tab.dataset.tab === 'music-reactive') {
+      const mode = document.getElementById('music-mode').value;
+      const preview = document.getElementById('screen-mirror-preview');
+      if (preview) preview.style.display = mode === 'screen-mirror' ? '' : 'none';
+    }
   });
 });
 
@@ -918,12 +926,27 @@ document.getElementById('auto-gain-release').addEventListener('input', (e) => {
 document.getElementById('music-mode').addEventListener('change', (e) => {
   const tune = document.getElementById('adaptive-freq-tune');
   if (tune) tune.style.display = e.target.value === 'adaptive-freq' ? '' : 'none';
+  // Stop screen capture when switching away from screen-mirror
+  if (e.target.value !== 'screen-mirror') {
+    screen.stop();
+    const preview = document.getElementById('screen-mirror-preview');
+    if (preview) preview.style.display = 'none';
+  } else {
+    const preview = document.getElementById('screen-mirror-preview');
+    if (preview) preview.style.display = '';
+  }
+});
+// Smart Spectrum toggle — shows tuning sliders when enabled
+document.getElementById('chk-smart-spectrum').addEventListener('change', (e) => {
+  const tune = document.getElementById('adaptive-freq-tune');
+  if (tune) tune.style.display = e.target.checked ? '' : 'none';
 });
 // Set initial visibility
 (function initAdaptiveFreqVisibility() {
   const mode = document.getElementById('music-mode').value;
+  const smart = document.getElementById('chk-smart-spectrum').checked;
   const tune = document.getElementById('adaptive-freq-tune');
-  if (tune) tune.style.display = mode === 'adaptive-freq' ? '' : 'none';
+  if (tune) tune.style.display = (smart || mode === 'adaptive-freq') ? '' : 'none';
 })();
 document.getElementById('adaptive-peak-count').addEventListener('input', (e) => {
   document.getElementById('adaptive-peak-count-label').textContent = e.target.value;
@@ -946,6 +969,19 @@ document.getElementById('music-gradient-speed').addEventListener('input', (e) =>
 
 document.getElementById('btn-start-audio').addEventListener('click', async () => {
   try {
+    const mode = document.getElementById('music-mode').value;
+
+    if (mode === 'screen-mirror') {
+      if (!await ensureNativeHID(true)) return;
+      await screen.start();
+      screen.setPreviewCanvas(document.getElementById('screen-preview-canvas'));
+      musicEffectRunning = true;
+      document.getElementById('btn-start-audio').classList.add('hidden');
+      document.getElementById('btn-stop-audio').classList.remove('hidden');
+      startMusicEffect(); // worker timer drives screen.sample()
+      return;
+    }
+
     if (!await ensureNativeHID(true)) return;
 
     const source = audioSourceSelect.value;
@@ -967,16 +1003,19 @@ document.getElementById('btn-start-audio').addEventListener('click', async () =>
     startMusicVisualizer();
     startMusicEffect();
   } catch (err) {
-    alert('Audio error: ' + err.message);
+    alert('Error: ' + err.message);
   }
 });
 
 document.getElementById('btn-stop-audio').addEventListener('click', () => {
   music.stop();
+  screen.stop();
   musicEffectRunning = false;
   if (musicAnimFrame) { musicAnimFrame.terminate(); musicAnimFrame = null; }
   document.getElementById('btn-stop-audio').classList.add('hidden');
   document.getElementById('btn-start-audio').classList.remove('hidden');
+  const preview = document.getElementById('screen-mirror-preview');
+  if (preview) preview.style.display = 'none';
 });
 
 function startMusicVisualizer() {
@@ -1026,6 +1065,38 @@ function startMusicVisualizer() {
   };
 }
 
+/**
+ * Convert detected frequency peaks into a fixed-size band array with spatial
+ * spreading (Gaussian falloff) so peaks don't snap between adjacent bins.
+ * @param {{freq:number,intensity:number}[]} peaks
+ * @param {number} numBands
+ * @param {number} spread 0-0.5 proportion of the band range to spread each peak
+ * @returns {Float32Array}
+ */
+function peaksToBands(peaks, numBands, spread = 0.12) {
+  const bands = new Float32Array(numBands);
+  if (!peaks.length) return bands;
+  const minFreq = 20, maxFreq = 20000, logRange = Math.log2(maxFreq / minFreq);
+  const sigma = spread * numBands; // how many bands wide the Gaussian spreads
+
+  for (const peak of peaks) {
+    const px = Math.max(0, Math.min(1, Math.log2(peak.freq / minFreq) / logRange));
+    const center = px * (numBands - 1);
+
+    // Spread the peak across neighboring bands with Gaussian falloff
+    const radius = Math.ceil(sigma * 3); // 3σ covers ~99.7%
+    const lo = Math.max(0, Math.floor(center - radius));
+    const hi = Math.min(numBands - 1, Math.ceil(center + radius));
+
+    for (let i = lo; i <= hi; i++) {
+      const dist = (i - center) / Math.max(0.01, sigma);
+      const weight = Math.exp(-0.5 * dist * dist);
+      bands[i] = Math.max(bands[i], peak.intensity * weight);
+    }
+  }
+  return bands;
+}
+
 function startMusicEffect() {
   let _lastMusicTime = performance.now();
 
@@ -1056,56 +1127,85 @@ function startMusicEffect() {
 
     effects.elapsed += dt * (effects.speed / 50);
 
-    if (mode === 'music-sync-upright') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+    // ── Smart Spectrum: use real frequency peaks instead of fixed bands ──
+    const smartSpectrum = document.getElementById('chk-smart-spectrum').checked;
+    const peakCount = parseInt(document.getElementById('adaptive-peak-count').value || '8');
+    const peakThreshold = parseInt(document.getElementById('adaptive-threshold').value || '8') / 100;
+    const peakSpread = parseInt(document.getElementById('adaptive-spread').value || '12') / 100;
+    const peaks = smartSpectrum ? music.getActivePeaks(peakCount, peakThreshold) : null;
+
+    if (mode === 'adaptive-freq') {
+      // Always uses peaks — smart or not (but peaks only exist if smart is on)
+      const ap = peaks || music.getActivePeaks(peakCount, peakThreshold);
+      effects.applyAdaptiveFreq(ap, palette, colorDirection, gradientSpeed, customColors, { spread: peakSpread });
+    } else if (mode === 'music-sync-upright') {
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyMusicSyncUpright(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'equalizer') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyEqualizer(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'chunky-eq') {
-      const bands = music.getSmoothedBands(8);
+      const raw = peaks ? peaksToBands(peaks, 8, peakSpread) : music.getSmoothedBands(8);
+      const bands = peaks ? music.smoothSmartBands(raw, 8) : raw;
       effects.applyChunkyEQ(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'column-split') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyColumnSplit(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'ridge-line') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyRidgeLine(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'bass-floor') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyBassFloor(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'sharp-bars') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applySharpBars(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'top-row-vu') {
       // pure bass — kick drums spike it hard, treble doesn't dilute the punch
       const level = Math.min(1, music.bass * 1.4);
       effects.applyTopRowVU(level, palette, colorDirection, gradientSpeed, customColors);
       if (sendToKeyboard) sendTopRowFrame(effects.colorBuffer);
-      return;
+      return; // skip the generic sendFrame below
     } else if (mode === 'rainbow-flow') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyRainbowFlow(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'bass-drop') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyBassDrop(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'freq-peak') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyFreqPeak(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'waterfall') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyWaterfall(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
     } else if (mode === 'ripple') {
-      const bands = music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const raw = peaks ? peaksToBands(peaks, KEYBOARD_LAYOUT.cols, peakSpread) : music.getSmoothedBands(KEYBOARD_LAYOUT.cols);
+      const bands = peaks ? music.smoothSmartBands(raw, KEYBOARD_LAYOUT.cols) : raw;
       effects.applyRipple(bands, palette, music.bass, music.mid, music.treble, colorDirection, gradientSpeed, customColors);
-    } else if (mode === 'adaptive-freq') {
-      const peakCount = parseInt(document.getElementById('adaptive-peak-count')?.value || '8');
-      const peakThreshold = parseInt(document.getElementById('adaptive-threshold')?.value || '8') / 100;
-      const peakSpread = parseInt(document.getElementById('adaptive-spread')?.value || '12') / 100;
-      const peaks = music.getActivePeaks(peakCount, peakThreshold);
-      effects.applyAdaptiveFreq(peaks, palette, colorDirection, gradientSpeed, customColors, {
-        spread: peakSpread,
-      });
+    } else if (mode === 'screen-mirror') {
+      // ── Screen Mirror: sample screen pixels and map to keyboard ──
+      if (!screen.isActive) {
+        updateKeyboardPreview(effects.colorBuffer);
+        if (sendToKeyboard) sendMusicFrame(effects.colorBuffer);
+        return;
+      }
+      const grid = screen.sample();
+      if (grid) {
+        effects.applyScreenMirror(grid);
+        updateKeyboardPreview(effects.colorBuffer);
+        if (sendToKeyboard) sendMusicFrame(effects.colorBuffer);
+      }
+      return; // screen mirror handles its own sending
     } else {
       effects.applyMusicData(music.bass, music.mid, music.treble, mode, palette);
     }

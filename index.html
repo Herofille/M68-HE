@@ -287,21 +287,27 @@
             <div class="form-group">
               <label>Mode</label>
               <select id="music-mode">
-                <option value="music-sync-upright" selected>🎵 Music Sync</option>
-                <option value="equalizer">🎛️ Equalizer (16 bands)</option>
-                <option value="chunky-eq">🟧 Chunky EQ (8 bands)</option>
+                <option value="music-sync-upright" selected>🎵 Music Sync — Upright</option>
+                <option value="equalizer">🎛️ Equalizer (16 bands, bars up)</option>
+                <option value="chunky-eq">🟧 Chunky EQ (8 bands, 2 cols each)</option>
                 <option value="column-split">📊 5-Column Split</option>
                 <option value="ridge-line">〰️ Ridge Line</option>
-                <option value="bass-floor">🔊 Bass Floor</option>
+                <option value="bass-floor">🟫 Bass Floor</option>
                 <option value="sharp-bars">📏 Sharp Bars</option>
                 <option value="top-row-vu">➡️ Top Row VU</option>
                 <option value="rainbow-flow">🌈 Rainbow Flow</option>
-                <option value="bass-drop">🔊 Bass Drop</option>
-                <option value="freq-peak">📶 Freq Peak</option>
-                <option value="waterfall">💧 Waterfall</option>
+                <option value="bass-drop">💥 Bass Drop</option>
+                <option value="freq-peak">🔝 Freq Peak</option>
+                <option value="waterfall">🌊 Waterfall</option>
                 <option value="ripple">⭕ Ripple</option>
                 <option value="adaptive-freq">🧠 Adaptive Freq</option>
+                <option value="screen-mirror">🖥️ Screen Mirror</option>
               </select>
+            </div>
+            <div id="screen-mirror-preview" class="card" style="display:none; margin-bottom:12px">
+              <h3>Screen Capture Preview</h3>
+              <canvas id="screen-preview-canvas" width="160" height="50" style="display:block; width:100%; max-width:320px; margin:6px 0; border:2px solid var(--accent); border-radius:4px; image-rendering:pixelated; background:#000;"></canvas>
+              <span class="hint" style="font-size:11px;color:var(--text-dim);">16×5 grid sampled from your screen. Each cell = one keyboard zone.</span>
             </div>
             <div class="form-group">
               <label>Sensitivity</label>
@@ -321,7 +327,13 @@
               <label style="margin-top:6px">Release Speed: <span id="auto-gain-release-label">3.0</span>s</label>
               <input type="range" id="auto-gain-release" min="5" max="80" value="30" />
             </div>
-            <div id="adaptive-freq-tune" class="form-group adaptive-freq-tune" style="display:none">
+            <div class="form-group">
+              <label class="toolbar-option">
+                <input type="checkbox" id="chk-smart-spectrum" /> 🧠 Smart Spectrum
+              </label>
+              <span class="hint">Uses real frequency peak detection instead of fixed bands. Affects ALL music modes.</span>
+            </div>
+            <div id="adaptive-freq-tune" class="form-group adaptive-freq-tune">
               <label>Peak Count: <span id="adaptive-peak-count-label">8</span></label>
               <input type="range" id="adaptive-peak-count" min="3" max="20" value="8" />
               <label style="margin-top:6px">Sensitivity Threshold: <span id="adaptive-threshold-label">8</span>%</label>
