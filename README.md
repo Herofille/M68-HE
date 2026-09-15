@@ -118,19 +118,6 @@ WebHID, or connect the UI to the native bridge.
 | `npm start` / `npm run app` | Launch the Electron desktop app |
 | `npm run start:hidden` | Launch Electron hidden (tray only) |
 
-## Manual Test Probes
-
-These are hardware/regression probes that favor console output and visual checks over
-formal assertions. Some require the keyboard; others simulate when it's unavailable.
-
-| Script | Description |
-|--------|-------------|
-| `node test-latency.js` | Latency regression; simulates if keyboard unavailable |
-| `node test-hid.js` | Native HID interface probe; requires keyboard |
-| `node test-sweep.js` | Command/offset sweeper; requires keyboard + visual checks |
-| `node test-dd.js` | `0xDD` payload probe; requires keyboard |
-| `node test-freq-response.js` | Audio frequency response tester |
-
 ## Project Structure
 
 ```
@@ -141,6 +128,7 @@ M68 HE/
 ├── index.html                # Vite HTML entry; tabbed HID/RGB UI
 ├── vite.config.js            # Vite config (port 3000, http)
 ├── start.bat / start-silent.vbs  # Windows silent launchers
+├── install.bat               # One-click Windows installer
 ├── src/                      # Browser modules and CSS
 │   ├── main.js               # DOM wiring, tabs, diagnostics, RGB controls
 │   ├── hid-manager.js        # WebHID connect/disconnect, report send/read
@@ -151,18 +139,11 @@ M68 HE/
 │   ├── screen-analyzer.js    # Screen-mirror capture analysis
 │   └── styles.css            # Dark theme UI
 ├── public/timer-worker.js    # 16ms worker timer for music-reactive mode
-├── scripts/                  # Live RGB/slot probe scripts
-├── test-*.js                 # Manual hardware/regression probes
-├── sync-architecture.md      # Latency rationale and regression notes
-└── saveweb2zip-com-www-hedriver-com/  # Archived hedriver.com reference (not app source)
+└── sync-architecture.md      # Latency rationale and regression notes
 ```
 
 ## Notes
 
-- `arrays.txt` and `fze.txt` are large reverse-engineering artifacts kept at the repo
-  root; read them selectively before changing LED mapping or protocol constants.
-- `saveweb2zip-com-www-hedriver-com/` is a mirrored snapshot of the external
-  hedriver.com build, used for reverse-engineering only — it is **not** app source.
 - The timing-sensitive music/RGB code targets sub-100ms perceived latency; do not
   switch back to long smoothing/release constants without re-measuring and updating
   `sync-architecture.md`.

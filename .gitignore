@@ -195,3 +195,12 @@ yarn-error.log*
 .pnp.*
 /saveweb2zip-com-www-hedriver-com
 /saveweb2zip-com-www-qmk-top
+
+# Reverse-engineering artifacts (kept local, not published)
+arrays.txt
+fze.txt
+intercept-script.js
+
+# Manual test/probe scripts (kept local, not published)
+test-*.js
+scripts/
