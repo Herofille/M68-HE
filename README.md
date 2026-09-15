@@ -60,18 +60,22 @@ Double-click **`install.bat`** (or run it from a terminal). It is a full bootstr
 installer that:
 
 1. Requests admin privileges (needed to install prerequisites system-wide).
-2. Installs **Node.js LTS** via `winget` if not already present.
-3. Installs **Python 3** via `winget` if not already present (needed for some native
-   module build fallbacks).
-4. Installs **Visual Studio 2022 Build Tools** (C++ workload) via `winget` if not
-   already present — this is the fallback compiler for `node-hid` when a prebuilt
-   binary isn't available.
-5. Refreshes PATH for the current session so newly installed tools are usable.
-6. Runs `npm install` (installs Electron, Vite, `node-hid`, `ws`, `naudiodon`).
+2. Installs **Node.js LTS** via `winget` if not already present, and verifies it
+   actually runs afterwards (not just that it's on disk).
+3. Installs **Python 3** via `winget` if not already present. This check runs
+   `python --version` and matches a real version string, so the Microsoft Store
+   alias stub doesn't count as "installed." Python is only needed for native
+   module build fallbacks.
+4. Runs `npm install` (installs Electron, Vite, `node-hid`, `ws`, `naudiodon`).
+   `node-hid` ships prebuilt binaries, so most users never need a compiler.
+5. If `npm install` fails because a native module needs to compile, installs
+   **Visual Studio 2022 Build Tools** (C++ workload) via `winget` and retries.
+6. Refreshes PATH for the current session so newly installed tools are usable.
 7. Runs `npm run build` into `dist/`.
 8. Prints the next steps.
 
-It is safe to re-run — it skips anything already installed.
+It is safe to re-run — it skips anything already installed, and retries `winget`
+installs once on transient failures.
 
 > **Requirements:** Windows 10 1809+ or Windows 11 (for `winget`). The script will
 > tell you to update Windows or install "App Installer" from the Microsoft Store if
