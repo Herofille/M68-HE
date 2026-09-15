@@ -56,17 +56,42 @@ regression notes behind the timing-sensitive audio/RGB code.
 
 ### Quick install (Windows)
 
-Double-click **`install.bat`** (or run it from a terminal). It will:
+Double-click **`install.bat`** (or run it from a terminal). It is a full bootstrap
+installer that:
 
-1. Install npm dependencies (including the native `node-hid` build).
-2. Run a production Vite build into `dist/`.
-3. Print the next steps.
+1. Requests admin privileges (needed to install prerequisites system-wide).
+2. Installs **Node.js LTS** via `winget` if not already present.
+3. Installs **Python 3** via `winget` if not already present (needed for some native
+   module build fallbacks).
+4. Installs **Visual Studio 2022 Build Tools** (C++ workload) via `winget` if not
+   already present — this is the fallback compiler for `node-hid` when a prebuilt
+   binary isn't available.
+5. Refreshes PATH for the current session so newly installed tools are usable.
+6. Runs `npm install` (installs Electron, Vite, `node-hid`, `ws`, `naudiodon`).
+7. Runs `npm run build` into `dist/`.
+8. Prints the next steps.
+
+It is safe to re-run — it skips anything already installed.
+
+> **Requirements:** Windows 10 1809+ or Windows 11 (for `winget`). The script will
+> tell you to update Windows or install "App Installer" from the Microsoft Store if
+> `winget` is missing.
 
 ```bat
 install.bat
 ```
 
 ### Manual install
+
+If you prefer to install prerequisites yourself, you need:
+
+- **Node.js** 18+ — https://nodejs.org
+- **Python 3** — https://python.org (only needed for native module build fallbacks)
+- **Visual Studio Build Tools** (C++ workload) —
+  https://visualstudio.microsoft.com/visual-cpp-build-tools/ (only needed if
+  `node-hid` has no prebuilt binary for your Node version)
+
+Then:
 
 ```bash
 npm install      # installs electron, vite, node-hid, ws, naudiodon
