@@ -11,6 +11,10 @@
 const HID = require('node-hid');
 const { WebSocketServer } = require('ws');
 
+process.on('uncaughtException', (err) => {
+  console.error('[HID Server] Uncaught exception:', err.message);
+});
+
 // K68 / M68 HE keyboard
 const VID = 0x19F5;
 const PID = 0xFB2B;
@@ -303,7 +307,15 @@ function sendEndFast() {
 
 // ─── WebSocket Server ───
 const PORT = 8484;
-const wss = new WebSocketServer({ port: PORT });
+const wss = new WebSocketServer({ port: PORT, host: '127.0.0.1' });
+
+wss.on('error', (err) => {
+  console.error('[HID Server] WebSocket server error:', err.message);
+});
+
+wss.on('listening', () => {
+  console.log(`[HID Server] Listening on ws://127.0.0.1:${PORT}`);
+});
 
 wss.on('connection', (ws) => {
   console.log('[WS] Client connected');
@@ -408,7 +420,6 @@ wss.on('connection', (ws) => {
   });
 });
 
-console.log(`[HID Server] Listening on ws://localhost:${PORT}`);
 console.log('[HID Server] Searching for keyboard...');
 const startResult = findAndOpenDevice();
 if (startResult) {

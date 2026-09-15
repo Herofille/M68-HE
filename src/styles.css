@@ -46,6 +46,18 @@ body {
 .header-left { display: flex; align-items: center; gap: 16px; }
 .header-right { display: flex; align-items: center; gap: 12px; }
 
+.header-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-dim, #8888aa);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.header-toggle input { cursor: pointer; }
+
 .logo {
   font-size: 1.4rem;
   font-weight: 700;

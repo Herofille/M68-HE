@@ -10,7 +10,7 @@
  */
 
 export class HIDWebSocketClient {
-  constructor(url = 'ws://localhost:8484') {
+  constructor(url = 'ws://127.0.0.1:8484') {
     this.url = url;
     this.ws = null;
     this.isConnected = false;
@@ -19,8 +19,8 @@ export class HIDWebSocketClient {
     this._resolvers = {};
   }
 
-  connect() {
-    return new Promise((resolve, reject) => {
+  connect(retries = 5, delay = 1000) {
+    const attempt = (n) => new Promise((resolve, reject) => {
       try {
         this.ws = new WebSocket(this.url);
         this.ws.binaryType = 'arraybuffer';
@@ -68,14 +68,23 @@ export class HIDWebSocketClient {
           this.isKeyboardReady = false;
         };
 
-        this.ws.onerror = (err) => {
-          console.error('[WS-HID] Connection failed. Is hid-server.js running?');
-          reject(new Error('WebSocket connection failed'));
+        this.ws.onerror = () => {
+          console.warn(`[WS-HID] Connection failed (${n} retries left). Is hid-server.js running?`);
+          if (n > 0) {
+            setTimeout(() => attempt(n - 1).then(resolve, reject), delay);
+          } else {
+            reject(new Error('WebSocket connection failed'));
+          }
         };
       } catch (err) {
-        reject(err);
+        if (n > 0) {
+          setTimeout(() => attempt(n - 1).then(resolve, reject), delay);
+        } else {
+          reject(err);
+        }
       }
     });
+    return attempt(retries);
   }
 
   disconnect() {

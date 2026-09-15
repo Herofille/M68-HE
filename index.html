@@ -15,6 +15,12 @@
         <span class="subtitle">WebHID Protocol Analyzer & Effects Engine</span>
       </div>
       <div class="header-right">
+        <label class="header-toggle" title="Launch automatically when Windows starts (runs hidden in the tray)">
+          <input type="checkbox" id="chk-auto-launch" /> Start with Windows
+        </label>
+        <label class="header-toggle" title="Restore the last used mode and start it automatically">
+          <input type="checkbox" id="chk-auto-resume" checked /> Auto-resume
+        </label>
         <div id="connection-status" class="status disconnected">
           <span class="status-dot"></span>
           <span class="status-text">Disconnected</span>

@@ -23,6 +23,7 @@ const FRAME_INTERVAL_NATIVE = 16;  // ~60fps attempt — server's enqueueRGBFram
 let FRAME_INTERVAL_MS = FRAME_INTERVAL_WEBHID;
 let nativeConnectPromise = null;
 let nativeStatsTimer = null;
+let restoringSettings = false;  // true while persisted UI settings are being re-applied
 
 // === Tab Navigation ===
 document.querySelectorAll('.tab').forEach(tab => {
@@ -800,7 +801,7 @@ async function ensureNativeHID(showError = false) {
       statusEl.classList.remove('connected');
       statusEl.classList.add('disconnected');
       statusText.textContent = 'Native HID server not running';
-      if (showError) alert('Native HID server is not connected. Start it with: npm run hid');
+      if (showError && !restoringSettings) alert('Native HID server is not connected. Start it with: npm run hid');
       return false;
     } finally {
       nativeConnectPromise = null;
@@ -1541,3 +1542,120 @@ document.addEventListener('keydown', (e) => {
   const rc = Math.floor(Math.random() * KEYBOARD_LAYOUT.cols);
   effects.triggerKey(rr, rc);
 });
+
+// === Persisted UI settings + auto-resume of the last used mode ===
+const SETTINGS_KEY = 'm68-ui-settings-v1';
+const PERSIST_ROOTS = ['#panel-effects', '#panel-music'];
+const chkAutoResume = document.getElementById('chk-auto-resume');
+const chkAutoLaunch = document.getElementById('chk-auto-launch');
+
+function persistedControls() {
+  const list = [];
+  PERSIST_ROOTS.forEach(sel => {
+    const root = document.querySelector(sel);
+    if (!root) return;
+    root.querySelectorAll('input, select').forEach(el => {
+      if (el.id && el.type !== 'file') list.push(el);
+    });
+  });
+  if (chkAutoResume) list.push(chkAutoResume);
+  return list;
+}
+
+function readSettings() {
+  try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; } catch { return {}; }
+}
+
+function saveSettings(patch = {}) {
+  const controls = {};
+  persistedControls().forEach(el => {
+    controls[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  const next = {
+    ...readSettings(),
+    ...patch,
+    controls,
+    activeEffect: document.querySelector('.effect-item.active')?.dataset.effect || null,
+  };
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(next));
+}
+
+let settingsSaveTimer = null;
+function queueSaveSettings() {
+  clearTimeout(settingsSaveTimer);
+  settingsSaveTimer = setTimeout(() => saveSettings(), 250);
+}
+
+function restoreSettings() {
+  const data = readSettings();
+  const controls = data.controls;
+  if (!controls) return data;
+
+  restoringSettings = true;
+  persistedControls().forEach(el => {
+    if (!(el.id in controls)) return;
+    if (el.type === 'checkbox') el.checked = !!controls[el.id];
+    else el.value = controls[el.id];
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+
+  if (data.activeEffect) {
+    const item = document.querySelector(`.effect-item[data-effect="${data.activeEffect}"]`);
+    if (item) item.click();
+  }
+  restoringSettings = false;
+  return data;
+}
+
+document.addEventListener('input', () => { if (!restoringSettings) queueSaveSettings(); });
+document.addEventListener('change', () => { if (!restoringSettings) queueSaveSettings(); });
+document.querySelectorAll('.effect-item').forEach(item => {
+  item.addEventListener('click', () => { if (!restoringSettings) queueSaveSettings(); });
+});
+window.addEventListener('beforeunload', () => saveSettings());
+
+// Remember which mode was running so it can be restarted automatically
+document.getElementById('btn-start-audio').addEventListener('click', () => saveSettings({ running: 'music' }));
+document.getElementById('btn-stop-audio').addEventListener('click', () => saveSettings({ running: null }));
+document.getElementById('btn-start-effect').addEventListener('click', () => saveSettings({ running: 'effects' }));
+document.getElementById('btn-stop-effect').addEventListener('click', () => saveSettings({ running: null }));
+
+async function waitForNativeHID(maxTries = 30, delayMs = 1000) {
+  for (let i = 0; i < maxTries; i++) {
+    if (await ensureNativeHID(false)) return true;
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+  return false;
+}
+
+async function autoResume(saved) {
+  if (!saved.running) return;
+  if (chkAutoResume && !chkAutoResume.checked) return;
+  // A file source cannot be restored (the picked file is not persistable)
+  if (saved.running === 'music' && audioSourceSelect.value === 'file') {
+    console.warn('[Resume] Last audio source was a file — pick it manually.');
+    return;
+  }
+  console.log(`[Resume] Restoring last mode: ${saved.running}`);
+  if (!await waitForNativeHID()) {
+    console.warn('[Resume] Native HID server unavailable — not resuming.');
+    return;
+  }
+  if (saved.running === 'music') document.getElementById('btn-start-audio').click();
+  else if (saved.running === 'effects') document.getElementById('btn-start-effect').click();
+}
+
+// === Auto-start with Windows (Electron only) ===
+if (chkAutoLaunch) {
+  if (window.electronAPI?.getAutoLaunch) {
+    window.electronAPI.getAutoLaunch().then(v => { chkAutoLaunch.checked = !!v; });
+    chkAutoLaunch.addEventListener('change', (e) => window.electronAPI.setAutoLaunch(e.target.checked));
+    window.electronAPI.onAutoLaunchChanged?.((v) => { chkAutoLaunch.checked = !!v; });
+  } else {
+    const label = chkAutoLaunch.closest('label');
+    if (label) label.style.display = 'none';
+  }
+}
+
+autoResume(restoreSettings());

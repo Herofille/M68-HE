@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "hid": "node hid-server.js",
     "start": "electron .",
+    "start:hidden": "electron . --hidden",
     "app": "electron ."
   },
   "devDependencies": {
